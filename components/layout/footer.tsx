@@ -68,7 +68,7 @@ export default async function Footer() {
           </p>
           <p className="md:ml-auto">
             <a href="https://vercel.com" className="text-black dark:text-white">
-              Created by ▲ Vercel
+              Created by ▲ aaa
             </a>
           </p>
         </div>

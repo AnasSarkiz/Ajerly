@@ -1,4 +1,3 @@
-import CartModal from "components/cart/modal";
 import LogoSquare from "components/logo-square";
 import { getMenu } from "lib/shopify";
 import { Menu } from "lib/shopify/types";
@@ -51,9 +50,6 @@ export async function Navbar() {
           <Suspense fallback={<SearchSkeleton />}>
             <Search />
           </Suspense>
-        </div>
-        <div className="flex justify-end md:w-1/3">
-          <CartModal />
         </div>
       </div>
     </nav>

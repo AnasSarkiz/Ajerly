@@ -10,18 +10,15 @@ import {
   unstable_cacheTag as cacheTag,
   revalidateTag,
 } from "next/cache";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import {
-  Cart,
   Collection,
   Connection,
   Image,
   Menu,
   Page,
   Product,
-  ShopifyCart,
-  ShopifyCollection,
   ShopifyProduct,
 } from "./types";
 
@@ -89,49 +86,6 @@ const removeEdgesAndNodes = <T>(array: Connection<T>): T[] => {
   return array.edges.map((edge) => edge?.node);
 };
 
-const reshapeCart = (cart: ShopifyCart): Cart => {
-  if (!cart.cost?.totalTaxAmount) {
-    cart.cost.totalTaxAmount = {
-      amount: "0.0",
-      currencyCode: cart.cost.totalAmount.currencyCode,
-    };
-  }
-
-  return {
-    ...cart,
-    lines: removeEdgesAndNodes(cart.lines),
-  };
-};
-
-const reshapeCollection = (
-  collection: ShopifyCollection,
-): Collection | undefined => {
-  if (!collection) {
-    return undefined;
-  }
-
-  return {
-    ...collection,
-    path: `/search/${collection.handle}`,
-  };
-};
-
-const reshapeCollections = (collections: ShopifyCollection[]) => {
-  const reshapedCollections = [];
-
-  for (const collection of collections) {
-    if (collection) {
-      const reshapedCollection = reshapeCollection(collection);
-
-      if (reshapedCollection) {
-        reshapedCollections.push(reshapedCollection);
-      }
-    }
-  }
-
-  return reshapedCollections;
-};
-
 const reshapeImages = (images: Connection<Image>, productTitle: string) => {
   const flattened = removeEdgesAndNodes(images);
 
@@ -179,121 +133,6 @@ const reshapeProducts = (products: ShopifyProduct[]) => {
 
   return reshapedProducts;
 };
-
-export async function createCart(): Promise<Cart> {
-  // const res = await shopifyFetch<ShopifyCreateCartOperation>({
-  //   query: createCartMutation
-  // });
-
-  // return reshapeCart(res.body.data.cartCreate.cart);
-  return {
-    checkoutUrl: "",
-    cost: {
-      subtotalAmount: { amount: "", currencyCode: "" },
-      totalAmount: { amount: "", currencyCode: "" },
-      totalTaxAmount: { amount: "", currencyCode: "" },
-    },
-    id: "",
-    lines: [],
-    totalQuantity: 1,
-  };
-}
-
-export async function addToCart(
-  lines: { merchandiseId: string; quantity: number }[],
-): Promise<Cart> {
-  // const cartId = (await cookies()).get('cartId')?.value!;
-  // const res = await shopifyFetch<ShopifyAddToCartOperation>({
-  //   query: addToCartMutation,
-  //   variables: {
-  //     cartId,
-  //     lines
-  //   }
-  // });
-  // return reshapeCart(res.body.data.cartLinesAdd.cart);
-  return {
-    checkoutUrl: "",
-    cost: {
-      subtotalAmount: { amount: "", currencyCode: "" },
-      totalAmount: { amount: "", currencyCode: "" },
-      totalTaxAmount: { amount: "", currencyCode: "" },
-    },
-    id: "",
-    lines: [],
-    totalQuantity: 1,
-  };
-}
-
-export async function removeFromCart(lineIds: string[]): Promise<Cart> {
-  // const cartId = (await cookies()).get('cartId')?.value!;
-  // const res = await shopifyFetch<ShopifyRemoveFromCartOperation>({
-  //   query: removeFromCartMutation,
-  //   variables: {
-  //     cartId,
-  //     lineIds
-  //   }
-  // });
-
-  // return reshapeCart(res.body.data.cartLinesRemove.cart);
-  return {
-    checkoutUrl: "",
-    cost: {
-      subtotalAmount: { amount: "", currencyCode: "" },
-      totalAmount: { amount: "", currencyCode: "" },
-      totalTaxAmount: { amount: "", currencyCode: "" },
-    },
-    id: "",
-    lines: [],
-    totalQuantity: 1,
-  };
-}
-
-export async function updateCart(
-  lines: { id: string; merchandiseId: string; quantity: number }[],
-): Promise<Cart> {
-  // const cartId = (await cookies()).get('cartId')?.value!;
-  // const res = await shopifyFetch<ShopifyUpdateCartOperation>({
-  //   query: editCartItemsMutation,
-  //   variables: {
-  //     cartId,
-  //     lines
-  //   }
-  // });
-
-  // return reshapeCart(res.body.data.cartLinesUpdate.cart);
-  return {
-    checkoutUrl: "",
-    cost: {
-      subtotalAmount: { amount: "", currencyCode: "" },
-      totalAmount: { amount: "", currencyCode: "" },
-      totalTaxAmount: { amount: "", currencyCode: "" },
-    },
-    id: "",
-    lines: [],
-    totalQuantity: 1,
-  };
-}
-
-export async function getCart(): Promise<Cart | undefined> {
-  const cartId = (await cookies()).get("cartId")?.value;
-
-  if (!cartId) {
-    return undefined;
-  }
-
-  // const res = await shopifyFetch<ShopifyCartOperation>({
-  //   query: getCartQuery,
-  //   variables: { cartId }
-  // });
-
-  // Old carts becomes `null` when you checkout.
-  // if (!res.body.data.cart) {
-  //   return undefined;
-  // }
-
-  // return reshapeCart(res.body.data.cart);
-  return undefined;
-}
 
 export async function getCollection(
   handle: string,
