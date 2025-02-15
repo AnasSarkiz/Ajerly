@@ -14,6 +14,7 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import NextLink from "next/link";
 import * as React from "react";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
@@ -224,13 +225,9 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             </Button>
             <Typography sx={{ textAlign: "center" }}>
               Don&apos;t have an account?{" "}
-              <Link
-                href="/material-ui/getting-started/templates/sign-in/"
-                variant="body2"
-                sx={{ alignSelf: "center" }}
-              >
+              <NextLink shallow prefetch href="/auth?method=signup">
                 Sign up
-              </Link>
+              </NextLink>
             </Typography>
           </Box>
         </Card>

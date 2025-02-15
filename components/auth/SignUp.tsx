@@ -9,11 +9,11 @@ import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import NextLink from "next/link";
 import * as React from "react";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
@@ -223,13 +223,9 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             </Button>
             <Typography sx={{ textAlign: "center" }}>
               Already have an account?{" "}
-              <Link
-                href="/material-ui/getting-started/templates/sign-in/"
-                variant="body2"
-                sx={{ alignSelf: "center" }}
-              >
+              <NextLink shallow prefetch href="/auth?method=signin">
                 Sign in
-              </Link>
+              </NextLink>
             </Typography>
           </Box>
         </Card>
