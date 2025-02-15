@@ -9,8 +9,12 @@
     "test": "pnpm prettier:check"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@mui/icons-material": "^6.4.4",
+    "@mui/material": "^6.4.4",
     "clsx": "^2.1.1",
     "geist": "^1.3.1",
     "next": "15.2.0-canary.47",
