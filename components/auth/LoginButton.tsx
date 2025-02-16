@@ -3,12 +3,13 @@
 import { UserIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import NextLink from "next/link";
-
-type MerchandiseSearchParams = {
-  [key: string]: string;
-};
+import { usePathname } from "next/navigation";
 
 export default function LoginButton({ className }: { className?: string }) {
+  const pathname = usePathname();
+
+  if (pathname.split("/").includes("auth")) return null;
+
   return (
     <NextLink
       shallow

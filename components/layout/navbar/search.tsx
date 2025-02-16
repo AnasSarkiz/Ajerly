@@ -2,10 +2,13 @@
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Form from "next/form";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export default function Search() {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  if (pathname.split("/").includes("auth")) return null;
 
   return (
     <Form
