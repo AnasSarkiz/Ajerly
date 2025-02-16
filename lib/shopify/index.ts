@@ -19,6 +19,7 @@ import {
   Menu,
   Page,
   Product,
+  ShopifyCollection,
   ShopifyProduct,
 } from "./types";
 
@@ -184,6 +185,31 @@ export async function getCollectionProducts({
   // );
   return [];
 }
+
+const reshapeCollection = (
+  collection: ShopifyCollection,
+): Collection | undefined => {
+  if (!collection) {
+    return undefined;
+  }
+  return {
+    ...collection,
+    path: `/search/${collection.handle}`,
+  };
+};
+
+const reshapeCollections = (collections: ShopifyCollection[]) => {
+  const reshapedCollections = [];
+  for (const collection of collections) {
+    if (collection) {
+      const reshapedCollection = reshapeCollection(collection);
+      if (reshapedCollection) {
+        reshapedCollections.push(reshapedCollection);
+      }
+    }
+  }
+  return reshapedCollections;
+};
 
 export async function getCollections(): Promise<Collection[]> {
   "use cache";

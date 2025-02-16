@@ -1,5 +1,6 @@
 import LoginButton from "components/auth/LoginButton";
 import LogoSquare from "components/logo-square";
+import ThemeSwitcher from "components/shared-theme/ThemeSwitcher";
 import { getMenu } from "lib/shopify";
 import { Menu } from "lib/shopify/types";
 import Link from "next/link";
@@ -52,8 +53,9 @@ export async function Navbar() {
             <Search />
           </Suspense>
         </div>
-        <div className="flex justify-end md:w-1/3">
+        <div className="flex items-center gap-2 justify-end md:w-1/3">
           <LoginButton />
+          <ThemeSwitcher />
         </div>
       </div>
     </nav>

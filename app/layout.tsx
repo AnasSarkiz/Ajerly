@@ -1,4 +1,5 @@
 import { Navbar } from "components/layout/navbar";
+import ThemeProvider from "components/shared-theme/ThemeProvider";
 import { WelcomeToast } from "components/welcome-toast";
 import { GeistSans } from "geist/font/sans";
 import { baseUrl } from "lib/utils";
@@ -6,7 +7,7 @@ import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
 
-const { SITE_NAME } = process.env;
+const { SITE_NAME } = process.env || "Ajerly";
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
@@ -28,12 +29,19 @@ export default async function RootLayout({
   return (
     <html lang="en" className={GeistSans.variable}>
       <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
-        <Navbar />
-        <main>
-          {children}
-          <Toaster closeButton />
-          <WelcomeToast />
-        </main>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          enableColorScheme
+        >
+          <Navbar />
+          <main>
+            {children}
+            <Toaster closeButton />
+            <WelcomeToast />
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );
