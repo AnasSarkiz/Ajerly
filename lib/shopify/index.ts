@@ -255,7 +255,7 @@ export async function getPage(handle: string): Promise<Page> {
     bodySummary: "bodySummary",
     createdAt: "createdAt",
     handle: "handle",
-    updatedAt: "updatedAt",
+    updatedAt: new Date().toISOString(),
   };
 }
 
