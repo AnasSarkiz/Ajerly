@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
 
 @plugin "@tailwindcss/container-queries";
 @plugin "@tailwindcss/typography";
@@ -10,12 +12,6 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
   }
 }
 
