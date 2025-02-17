@@ -1,12 +1,10 @@
 {
   "private": true,
   "scripts": {
+   "test": "deno test --allow-net  --allow-env --allow-read",
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
-    "prettier": "prettier --write --ignore-unknown .",
-    "prettier:check": "prettier --check --ignore-unknown .",
-    "test": "pnpm prettier:check"
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
