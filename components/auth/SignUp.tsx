@@ -221,7 +221,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             <Button
               fullWidth
               variant="outlined"
-              onClick={() => alert("Sign up with Google")}
+              onClick={() =>
+                alert("Sign up with Google")}
               startIcon={<GoogleIcon />}
             >
               Sign up with Google

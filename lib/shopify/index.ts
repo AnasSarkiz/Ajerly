@@ -6,9 +6,9 @@ import {
 import { isShopifyError } from "lib/type-guards";
 import { ensureStartsWith } from "lib/utils";
 import {
+  revalidateTag,
   unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,
-  revalidateTag,
 } from "next/cache";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -29,8 +29,7 @@ const domain = process.env.SHOPIFY_STORE_DOMAIN
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
 const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
 
-type ExtractVariables<T> = T extends { variables: object }
-  ? T["variables"]
+type ExtractVariables<T> = T extends { variables: object } ? T["variables"]
   : never;
 
 export async function shopifyFetch<T>({

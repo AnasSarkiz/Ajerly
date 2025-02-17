@@ -19,8 +19,7 @@ export function VariantSelector({
 }) {
   const { state, updateOption } = useProduct();
   const updateURL = useUpdateURL();
-  const hasNoOptionsOrJustOneOption =
-    !options.length ||
+  const hasNoOptionsOrJustOneOption = !options.length ||
     (options.length === 1 && options[0]?.values.length === 1);
 
   if (hasNoOptionsOrJustOneOption) {
@@ -63,7 +62,7 @@ export function VariantSelector({
               filtered.every(
                 ([key, value]) =>
                   combination[key] === value && combination.availableForSale,
-              ),
+              )
             );
 
             // The option is active if it's in the selected options.
@@ -78,7 +77,9 @@ export function VariantSelector({
                 key={value}
                 aria-disabled={!isAvailableForSale}
                 disabled={!isAvailableForSale}
-                title={`${option.name} ${value}${!isAvailableForSale ? " (Out of Stock)" : ""}`}
+                title={`${option.name} ${value}${
+                  !isAvailableForSale ? " (Out of Stock)" : ""
+                }`}
                 className={clsx(
                   "flex min-w-[48px] items-center justify-center rounded-full border bg-neutral-100 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-neutral-900",
                   {

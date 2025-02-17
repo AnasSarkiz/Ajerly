@@ -12,8 +12,7 @@ export default function ColorModeSelect(props: SelectProps) {
     <Select
       value={mode}
       onChange={(event) =>
-        setMode(event.target.value as "system" | "light" | "dark")
-      }
+        setMode(event.target.value as "system" | "light" | "dark")}
       SelectDisplayProps={{
         // @ts-ignore
         "data-screenshot": "toggle-mode",

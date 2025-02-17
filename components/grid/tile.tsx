@@ -28,23 +28,27 @@ export function GridTileImage({
         },
       )}
     >
-      {props.src ? (
-        <Image
-          className={clsx("relative h-full w-full object-contain", {
-            "transition duration-300 ease-in-out group-hover:scale-105":
-              isInteractive,
-          })}
-          {...props}
-        />
-      ) : null}
-      {label ? (
-        <Label
-          title={label.title}
-          amount={label.amount}
-          currencyCode={label.currencyCode}
-          position={label.position}
-        />
-      ) : null}
+      {props.src
+        ? (
+          <Image
+            className={clsx("relative h-full w-full object-contain", {
+              "transition duration-300 ease-in-out group-hover:scale-105":
+                isInteractive,
+            })}
+            {...props}
+          />
+        )
+        : null}
+      {label
+        ? (
+          <Label
+            title={label.title}
+            amount={label.amount}
+            currencyCode={label.currencyCode}
+            position={label.position}
+          />
+        )
+        : null}
     </div>
   );
 }

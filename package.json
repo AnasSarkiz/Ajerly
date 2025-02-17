@@ -1,10 +1,11 @@
 {
   "private": true,
   "scripts": {
-   "test": "deno test --allow-net  --allow-env --allow-read",
+    "test": "deno test --allow-net  --allow-env --allow-read",
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "format": "deno fmt"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -30,8 +31,6 @@
     "@types/react-dom": "19.0.3",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.1",
-    "prettier": "3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4.0.5",
     "typescript": "5.7.3"
   }
