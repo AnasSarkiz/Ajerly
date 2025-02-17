@@ -80,14 +80,14 @@ for this, but a `.env` file is all that is necessary.
 > Note: You should not commit your `.env` file or it will expose secrets that
 > will allow others to control your Shopify store.
 
-1. Install Vercel CLI: `npm i -g vercel`
+1. Install Vercel CLI: `deno i -g vercel`
 2. Link local instance with Vercel and GitHub accounts (creates `.vercel`
    directory): `vercel link`
 3. Download your environment variables: `vercel env pull`
 
 ```bash
-pnpm install
-pnpm dev
+deno install
+deno dev
 ```
 
 Your app should now be running on [localhost:3000](http://localhost:3000/).
@@ -99,7 +99,7 @@ Your app should now be running on [localhost:3000](http://localhost:3000/).
 1. Select the `Vercel Solutions` scope.
 1. Connect to the existing `commerce-shopify` project.
 1. Run `vc env pull` to get environment variables.
-1. Run `pnpm dev` to ensure everything is working correctly.
+1. Run `deno dev` to ensure everything is working correctly.
 
 </details>
 
