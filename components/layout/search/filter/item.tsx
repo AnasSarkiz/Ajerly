@@ -66,9 +66,7 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
 }
 
 export function FilterItem({ item }: { item: ListItem }) {
-  return "path" in item ? (
-    <PathFilterItem item={item} />
-  ) : (
-    <SortFilterItem item={item} />
-  );
+  return "path" in item
+    ? <PathFilterItem item={item} />
+    : <SortFilterItem item={item} />;
 }

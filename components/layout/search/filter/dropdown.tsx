@@ -54,9 +54,7 @@ export default function FilterItemDropdown({ list }: { list: ListItem[] }) {
           }}
           className="absolute z-40 w-full rounded-b-md bg-white p-4 shadow-md dark:bg-black"
         >
-          {list.map((item: ListItem, i) => (
-            <FilterItem key={i} item={item} />
-          ))}
+          {list.map((item: ListItem, i) => <FilterItem key={i} item={item} />)}
         </div>
       )}
     </div>

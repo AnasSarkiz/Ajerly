@@ -35,15 +35,15 @@ export async function generateMetadata(props: {
     },
     openGraph: url
       ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
+        images: [
+          {
+            url,
+            width,
+            height,
+            alt,
+          },
+        ],
+      }
       : null,
   };
 }
