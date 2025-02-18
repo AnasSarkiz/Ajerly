@@ -133,6 +133,31 @@ const reshapeProducts = (products: ShopifyProduct[]) => {
 
   return reshapedProducts;
 };
+// const reshapeCollection = (
+//   collection: ShopifyCollection,
+// ): Collection | undefined => {
+//   if (!collection) {
+//     return undefined;
+//   }
+//   return {
+//     ...collection,
+//     path: `/search/${collection.handle}`,
+//   };
+// };
+
+// const reshapeCollections = (collections: ShopifyCollection[]) => {
+//   const reshapedCollections = [];
+//   for (const collection of collections) {
+//     if (collection) {
+//       const reshapedCollection = reshapeCollection(collection);
+//       if (reshapedCollection) {
+//         reshapedCollections.push(reshapedCollection);
+//       }
+//     }
+//   }
+//   return reshapedCollections;
+// };
+
 
 export async function getCollection(
   handle: string,
@@ -149,7 +174,14 @@ export async function getCollection(
   // });
 
   // return reshapeCollection(res.body.data.collection);
-  return undefined;
+  return {
+    description: "description",
+    handle: handle,
+    title: handle,
+    seo: { title: "title", description: "description" },
+    updatedAt: new Date().toISOString(),
+    path: `/${handle}`,
+  };
 }
 
 export async function getCollectionProducts({
@@ -182,33 +214,38 @@ export async function getCollectionProducts({
   // return reshapeProducts(
   //   removeEdgesAndNodes(res.body.data.collection.products)
   // );
-  return [];
+  return [1, 2, 3, 4, 5].map((id) => ({
+    id: id.toString(),
+    title: `title${id}`,
+    handle: collection,
+    variants: [{
+      id: id.toString(),
+      price: { amount: "10", currencyCode: "USD" },
+      title: `title${id}`,
+      availableForSale: false,
+      selectedOptions: [],
+    }],
+    images: [],
+    tags: [],
+    seo: { title: `title${id}`, description: `description${id}` },
+    updatedAt: new Date().toISOString(),
+    description: `description${id}`,
+    availableForSale: true,
+    descriptionHtml: `descriptionHtml${id}`,
+    options: [],
+    priceRange: {
+      minVariantPrice: { amount: "0", currencyCode: "USD" },
+      maxVariantPrice: { amount: "10", currencyCode: "USD" },
+    },
+    featuredImage: {
+      url:
+        "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
+      altText: "altText",
+      width: 800,
+      height: 600,
+    },
+  }));
 }
-
-const reshapeCollection = (
-  collection: ShopifyCollection,
-): Collection | undefined => {
-  if (!collection) {
-    return undefined;
-  }
-  return {
-    ...collection,
-    path: `/search/${collection.handle}`,
-  };
-};
-
-const reshapeCollections = (collections: ShopifyCollection[]) => {
-  const reshapedCollections = [];
-  for (const collection of collections) {
-    if (collection) {
-      const reshapedCollection = reshapeCollection(collection);
-      if (reshapedCollection) {
-        reshapedCollections.push(reshapedCollection);
-      }
-    }
-  }
-  return reshapedCollections;
-};
 
 export async function getCollections(): Promise<Collection[]> {
   "use cache";
@@ -239,7 +276,15 @@ export async function getCollections(): Promise<Collection[]> {
   // ];
 
   // return collections;
-  return [];
+  return [1, 2, 3, 4, 5].map((id) => ({
+    id: id.toString(),
+    handle: `menu${id}`,
+    title: `title${id}`,
+    description: `description${id}`,
+    seo: { title: `title${id}`, description: `description${id}` },
+    path: `/title${id}`,
+    updatedAt: new Date().toISOString(),
+  }));
 }
 
 export async function getMenu(handle: string): Promise<Menu[]> {
@@ -263,7 +308,10 @@ export async function getMenu(handle: string): Promise<Menu[]> {
   //       .replace('/pages', '')
   //   })) || []
   // );
-  return [];
+  return [1, 2, 3, 4, 5].map((id) => ({
+    title: `menu${id}`,
+    path: `/menu${id}`,
+  }));
 }
 
 export async function getPage(handle: string): Promise<Page> {
@@ -274,12 +322,12 @@ export async function getPage(handle: string): Promise<Page> {
 
   // return res.body.data.pageByHandle;
   return {
-    id: "id",
-    title: "title",
-    body: "body",
-    bodySummary: "bodySummary",
-    createdAt: "createdAt",
-    handle: "handle",
+    id: `id${handle}`,
+    title: handle,
+    body: `body of ${handle}`,
+    bodySummary: `bodySummary of ${handle}`,
+    createdAt: new Date().toISOString(),
+    handle: handle,
     updatedAt: new Date().toISOString(),
   };
 }
@@ -290,7 +338,15 @@ export async function getPages(): Promise<Page[]> {
   // });
 
   // return removeEdgesAndNodes(res.body.data.pages);
-  return [];
+  return [1, 2, 3, 4, 5].map((id) => ({
+    id: id.toString(),
+    title: `title${id}`,
+    body: `body${id}`,
+    bodySummary: `bodySummary${id}`,
+    createdAt: new Date().toISOString(),
+    handle: `menu${id}`,
+    updatedAt: new Date().toISOString(),
+  }));
 }
 
 export async function getProduct(handle: string): Promise<Product | undefined> {
@@ -306,7 +362,37 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
   // });
 
   // return reshapeProduct(res.body.data.product, false);
-  return undefined;
+  return {
+    id: "id",
+    title: `title ${handle}`,
+    handle: handle,
+    variants: [{
+      id: "id",
+      price: { amount: "10", currencyCode: "USD" },
+      title: "title",
+      availableForSale: true,
+      selectedOptions: [],
+    }],
+    images: [],
+    tags: [],
+    seo: { title: "title", description: "description" },
+    updatedAt: new Date().toISOString(),
+    description: "description",
+    availableForSale: true,
+    descriptionHtml: "descriptionHtml",
+    options: [],
+    priceRange: {
+      minVariantPrice: { amount: "0", currencyCode: "USD" },
+      maxVariantPrice: { amount: "10", currencyCode: "USD" },
+    },
+    featuredImage: {
+      url:
+        "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
+      altText: "altText",
+      width: 800,
+      height: 600,
+    },
+  };
 }
 
 export async function getProductRecommendations(
@@ -324,7 +410,37 @@ export async function getProductRecommendations(
   // });
 
   // return reshapeProducts(res.body.data.productRecommendations);
-  return [];
+  return [1, 2, 3, 4, 5].map((id) => ({
+    id: id.toString(),
+    title: `title${id}`,
+    handle: `handle${id}`,
+    variants: [{
+      id: id.toString(),
+      price: { amount: "10", currencyCode: "USD" },
+      title: `title${id}`,
+      availableForSale: false,
+      selectedOptions: [],
+    }],
+    images: [],
+    tags: [],
+    seo: { title: `title${id}`, description: `description${id}` },
+    updatedAt: new Date().toISOString(),
+    description: `description${id}`,
+    availableForSale: true,
+    descriptionHtml: `descriptionHtml${id}`,
+    options: [],
+    priceRange: {
+      minVariantPrice: { amount: "0", currencyCode: "USD" },
+      maxVariantPrice: { amount: "10", currencyCode: "USD" },
+    },
+    featuredImage: {
+      url:
+        "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
+      altText: "altText",
+      width: 800,
+      height: 600,
+    },
+  }));
 }
 
 export async function getProducts({
@@ -350,7 +466,37 @@ export async function getProducts({
   // });
 
   // return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
-  return [];
+  return [1, 2, 3, 4, 5].map((id) => ({
+    id: id.toString(),
+    title: `title${id}`,
+    handle: `menu${id}`,
+    variants: [{
+      id: id.toString(),
+      price: { amount: "10", currencyCode: "USD" },
+      title: `title${id}`,
+      availableForSale: false,
+      selectedOptions: [],
+    }],
+    images: [],
+    tags: [],
+    seo: { title: `title${id}`, description: `description${id}` },
+    updatedAt: new Date().toISOString(),
+    description: `description${id}`,
+    availableForSale: true,
+    descriptionHtml: `descriptionHtml${id}`,
+    options: [],
+    priceRange: {
+      minVariantPrice: { amount: "0", currencyCode: "USD" },
+      maxVariantPrice: { amount: "10", currencyCode: "USD" },
+    },
+    featuredImage: {
+      url:
+        "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
+      altText: "altText",
+      width: 800,
+      height: 600,
+    },
+  }));
 }
 
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
