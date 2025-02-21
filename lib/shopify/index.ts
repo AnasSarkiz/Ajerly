@@ -158,7 +158,6 @@ const reshapeProducts = (products: ShopifyProduct[]) => {
 //   return reshapedCollections;
 // };
 
-
 export async function getCollection(
   handle: string,
 ): Promise<Collection | undefined> {

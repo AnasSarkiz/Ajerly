@@ -1,3 +1,5 @@
+import { hostname } from "os";
+
 export default {
   experimental: {
     ppr: true,
@@ -13,6 +15,11 @@ export default {
         protocol: "https",
         hostname: "cdn.shopify.com",
         pathname: "/s/files/**",
+      },
+      {
+        protocol: "https",
+        hostname: "community.softr.io",
+        port: "",
       },
     ],
   },
