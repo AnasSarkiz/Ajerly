@@ -7,7 +7,7 @@ import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
 
-const { SITE_NAME } = process.env || "Ajerly";
+const { SITE_NAME } = process.env;
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
@@ -36,7 +36,7 @@ export default async function RootLayout({
           enableColorScheme
         >
           <Navbar />
-          <main>
+          <main className="flex min-h-screen flex-col items-center justify-center">
             {children}
             <Toaster closeButton />
             <WelcomeToast />

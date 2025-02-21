@@ -1,7 +1,8 @@
 import { Carousel } from "components/carousel";
 import { ThreeItemGrid } from "components/grid/three-items";
 import Footer from "components/layout/footer";
-
+import { HomeSlider } from "components/homeSlider";
+import { HomeInfo } from "components/homeInfo";
 export const metadata = {
   description:
     "High-performance ecommerce store built with Next.js, Vercel, and Shopify.",
@@ -13,7 +14,8 @@ export const metadata = {
 export default function HomePage() {
   return (
     <>
-      <ThreeItemGrid />
+      <HomeInfo />
+      <HomeSlider />
       <Carousel />
       <Footer />
     </>
