@@ -28,8 +28,8 @@ export function Slider({ items }: { items: Product[] }) {
     return () => clearInterval(timer);
   }, []);
   return (
-    <div className="flex min-h-screen w-full flex-col">
-      <section className="relative h-[600px] overflow-hidden">
+    <div className="relative h-full flex min-h-screen w-full flex-col">
+      <section className="relative h-[70vh] overflow-hidden">
         <div
           className="absolute inset-0 transition-opacity duration-500"
           style={{ opacity: isFading ? 0.5 : 1 }}
