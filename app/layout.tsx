@@ -36,7 +36,7 @@ export default async function RootLayout({
           enableColorScheme
         >
           <Navbar />
-          <main className="flex min-h-screen flex-col items-center justify-center">
+          <main>
             {children}
             <Toaster closeButton />
             <WelcomeToast />
