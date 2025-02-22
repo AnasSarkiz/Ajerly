@@ -9,8 +9,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [
-    require("@tailwindcss/container-queries"),
-    require("@tailwindcss/typography"),
-  ],
+  plugins: [],
 }
