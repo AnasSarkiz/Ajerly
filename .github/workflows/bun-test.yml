@@ -21,4 +21,7 @@ jobs:
         run: bun install
 
       - name: Run tests
+        env:
+          PLUTU_ACCESS_TOKEN: ${{ secrets.PLUTU_ACCESS_TOKEN }}
+          PLUTU_API_KEY: ${{ secrets.PLUTU_API_KEY }}
         run: bun test
