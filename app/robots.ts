@@ -1,4 +1,4 @@
-import { baseUrl } from "lib/utils";
+import { baseUrl } from "lib/utils"
 
 export default function robots() {
   return {
@@ -9,5 +9,5 @@ export default function robots() {
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
-  };
+  }
 }

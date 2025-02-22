@@ -3,6 +3,6 @@ const seoFragment = /* GraphQL */ `
     description
     title
   }
-`;
+`
 
-export default seoFragment;
+export default seoFragment

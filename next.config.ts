@@ -1,4 +1,4 @@
-import { hostname } from "os";
+import { hostname } from "os"
 
 export default {
   experimental: {
@@ -23,4 +23,4 @@ export default {
       },
     ],
   },
-};
+}

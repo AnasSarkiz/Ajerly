@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import Form from "next/form";
-import { usePathname, useSearchParams } from "next/navigation";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
+import Form from "next/form"
+import { usePathname, useSearchParams } from "next/navigation"
 
 export default function Search() {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
 
-  if (pathname.split("/").includes("auth")) return null;
+  if (pathname.split("/").includes("auth")) return null
 
   return (
     <Form
@@ -28,7 +28,7 @@ export default function Search() {
         <MagnifyingGlassIcon className="h-4" />
       </div>
     </Form>
-  );
+  )
 }
 
 export function SearchSkeleton() {
@@ -42,5 +42,5 @@ export function SearchSkeleton() {
         <MagnifyingGlassIcon className="h-4" />
       </div>
     </form>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import {test, expect } from "bun:test"
-import dotenv from 'dotenv'
+import { test, expect } from "bun:test"
+import dotenv from "dotenv"
 dotenv.config()
 
 async function confirmTransaction(
@@ -8,24 +8,24 @@ async function confirmTransaction(
   returnUrl: string,
   customerIp: string,
 ) {
-  const url = "https://api.plutus.ly/api/v1/transaction/localbankcards/confirm";
+  const url = "https://api.plutus.ly/api/v1/transaction/localbankcards/confirm"
 
-  const formData = new FormData();
-  formData.append("amount", amount);
-  formData.append("invoice_no", invoiceNo);
-  formData.append("return_url", returnUrl);
-  formData.append("customer_ip", customerIp);
+  const formData = new FormData()
+  formData.append("amount", amount)
+  formData.append("invoice_no", invoiceNo)
+  formData.append("return_url", returnUrl)
+  formData.append("customer_ip", customerIp)
 
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "X-API-KEY": `${process.env.PLUTU_API_KEY ?? ""}`,
-      "Authorization": `Bearer ${process.env.PLUTU_ACCESS_TOKEN ?? ""}`,
+      Authorization: `Bearer ${process.env.PLUTU_ACCESS_TOKEN ?? ""}`,
     },
     body: formData,
-  });
+  })
 
-  return response.json();
+  return response.json()
 }
 
 test("confirmTransaction should return a valid response", async () => {
@@ -34,7 +34,7 @@ test("confirmTransaction should return a valid response", async () => {
     "INV12345",
     "https://yourreturn.url",
     "192.168.1.1",
-  );
-  expect(response.status).toBe(200);
-  expect(response.result.code).toBe("CHECKOUT_REDIRECT");
-});
+  )
+  expect(response.status).toBe(200)
+  expect(response.result.code).toBe("CHECKOUT_REDIRECT")
+})

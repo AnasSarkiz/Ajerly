@@ -1,12 +1,12 @@
-import Grid from "components/grid";
-import { GridTileImage } from "components/grid/tile";
-import { Product } from "lib/shopify/types";
-import Link from "next/link";
+import Grid from "components/grid"
+import { GridTileImage } from "components/grid/tile"
+import { Product } from "lib/shopify/types"
+import Link from "next/link"
 
 export default function ProductGridItems({
   products,
 }: {
-  products: Product[];
+  products: Product[]
 }) {
   return (
     <>
@@ -32,5 +32,5 @@ export default function ProductGridItems({
         </Grid.Item>
       ))}
     </>
-  );
+  )
 }
