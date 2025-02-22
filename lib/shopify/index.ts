@@ -240,7 +240,7 @@ export async function getCollectionProducts({
       maxVariantPrice: { amount: "10", currencyCode: "USD" },
     },
     featuredImage: {
-      url: "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
+      url: `https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-${id}_large.png?v=1530129132`,
       altText: "altText",
       width: 800,
       height: 600,
