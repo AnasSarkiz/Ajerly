@@ -1,5 +1,5 @@
 import { Carousel } from "components/carousel"
-import { ThreeItemGrid } from "components/grid/three-items"
+import { FeaturedCollection } from "components/featuredCollection"
 import Footer from "components/layout/footer"
 import { HomeSlider } from "components/homeSlider"
 import { HomeInfo } from "components/homeInfo"
@@ -16,6 +16,7 @@ export default function HomePage() {
     <>
       <HomeInfo />
       <HomeSlider />
+      <FeaturedCollection />
       <Carousel />
       <Footer />
     </>

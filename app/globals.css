@@ -29,3 +29,18 @@ button {
     focus-visible:ring-offset-neutral-50 dark:focus-visible:ring-neutral-600
     dark:focus-visible:ring-offset-neutral-900;
 }
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-fadeInUp {
+  opacity: 0;
+  animation: fadeInUp 2s ease-out forwards;
+}
