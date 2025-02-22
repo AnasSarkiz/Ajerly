@@ -10,7 +10,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    require('@tailwindcss/container-queries'),
-    require('@tailwindcss/typography'),
+    require("@tailwindcss/container-queries"),
+    require("@tailwindcss/typography"),
   ],
-};
+}

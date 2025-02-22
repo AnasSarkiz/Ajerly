@@ -1,7 +1,7 @@
-"use client";
-import { Product } from "lib/shopify/types";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+"use client"
+import { Product } from "lib/shopify/types"
+import Image from "next/image"
+import { useEffect, useState } from "react"
 
 export function Slider({ items }: { items: Product[] }) {
   const slides = items.map((item, i) => ({
