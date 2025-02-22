@@ -1,13 +1,13 @@
-import { Navbar } from "components/layout/navbar";
-import ThemeProvider from "components/shared-theme/ThemeProvider";
-import { WelcomeToast } from "components/welcome-toast";
-import { GeistSans } from "geist/font/sans";
-import { baseUrl } from "lib/utils";
-import { ReactNode } from "react";
-import { Toaster } from "sonner";
-import "./globals.css";
+import { Navbar } from "components/layout/navbar"
+import ThemeProvider from "components/shared-theme/ThemeProvider"
+import { WelcomeToast } from "components/welcome-toast"
+import { GeistSans } from "geist/font/sans"
+import { baseUrl } from "lib/utils"
+import { ReactNode } from "react"
+import { Toaster } from "sonner"
+import "./globals.css"
 
-const { SITE_NAME } = process.env;
+const { SITE_NAME } = process.env
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
@@ -19,12 +19,12 @@ export const metadata = {
     follow: true,
     index: true,
   },
-};
+}
 
 export default async function RootLayout({
   children,
 }: {
-  children: ReactNode;
+  children: ReactNode
 }) {
   return (
     <html lang="en" className={GeistSans.variable}>
@@ -44,5 +44,5 @@ export default async function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

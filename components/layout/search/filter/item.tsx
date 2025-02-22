@@ -1,20 +1,20 @@
-"use client";
+"use client"
 
-import clsx from "clsx";
-import type { SortFilterItem } from "lib/constants";
-import { createUrl } from "lib/utils";
-import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import type { ListItem, PathFilterItem } from ".";
+import clsx from "clsx"
+import type { SortFilterItem } from "lib/constants"
+import { createUrl } from "lib/utils"
+import Link from "next/link"
+import { usePathname, useSearchParams } from "next/navigation"
+import type { ListItem, PathFilterItem } from "."
 
 function PathFilterItem({ item }: { item: PathFilterItem }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const active = pathname === item.path;
-  const newParams = new URLSearchParams(searchParams.toString());
-  const DynamicTag = active ? "p" : Link;
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const active = pathname === item.path
+  const newParams = new URLSearchParams(searchParams.toString())
+  const DynamicTag = active ? "p" : Link
 
-  newParams.delete("q");
+  newParams.delete("q")
 
   return (
     <li className="mt-2 flex text-black dark:text-white" key={item.title}>
@@ -30,22 +30,22 @@ function PathFilterItem({ item }: { item: PathFilterItem }) {
         {item.title}
       </DynamicTag>
     </li>
-  );
+  )
 }
 
 function SortFilterItem({ item }: { item: SortFilterItem }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const active = searchParams.get("sort") === item.slug;
-  const q = searchParams.get("q");
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const active = searchParams.get("sort") === item.slug
+  const q = searchParams.get("q")
   const href = createUrl(
     pathname,
     new URLSearchParams({
       ...(q && { q }),
       ...(item.slug && item.slug.length && { sort: item.slug }),
     }),
-  );
-  const DynamicTag = active ? "p" : Link;
+  )
+  const DynamicTag = active ? "p" : Link
 
   return (
     <li
@@ -62,11 +62,13 @@ function SortFilterItem({ item }: { item: SortFilterItem }) {
         {item.title}
       </DynamicTag>
     </li>
-  );
+  )
 }
 
 export function FilterItem({ item }: { item: ListItem }) {
-  return "path" in item
-    ? <PathFilterItem item={item} />
-    : <SortFilterItem item={item} />;
+  return "path" in item ? (
+    <PathFilterItem item={item} />
+  ) : (
+    <SortFilterItem item={item} />
+  )
 }

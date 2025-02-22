@@ -1,26 +1,26 @@
-"use client";
+"use client"
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import MuiCard from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
-import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
-import Stack from "@mui/material/Stack";
-import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { useTheme } from "next-themes";
-import NextLink from "next/link";
-import * as React from "react";
-import ColorModeSelect from "../shared-theme/ColorModeSelect";
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import MuiCard from "@mui/material/Card"
+import Checkbox from "@mui/material/Checkbox"
+import Divider from "@mui/material/Divider"
+import FormControl from "@mui/material/FormControl"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import FormLabel from "@mui/material/FormLabel"
+import Stack from "@mui/material/Stack"
+import { createTheme, styled, ThemeProvider } from "@mui/material/styles"
+import TextField from "@mui/material/TextField"
+import Typography from "@mui/material/Typography"
+import { useTheme } from "next-themes"
+import NextLink from "next/link"
+import * as React from "react"
+import ColorModeSelect from "../shared-theme/ColorModeSelect"
 import {
   FacebookIcon,
   GoogleIcon,
   SitemarkIcon,
-} from "./components/CustomIcons";
+} from "./components/CustomIcons"
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -39,7 +39,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
     boxShadow:
       "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
   }),
-}));
+}))
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
   height: "100%",
@@ -48,81 +48,81 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(4),
   },
-}));
+}))
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
-  const [nameError, setNameError] = React.useState(false);
-  const [nameErrorMessage, setNameErrorMessage] = React.useState("");
+  const [emailError, setEmailError] = React.useState(false)
+  const [emailErrorMessage, setEmailErrorMessage] = React.useState("")
+  const [passwordError, setPasswordError] = React.useState(false)
+  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("")
+  const [nameError, setNameError] = React.useState(false)
+  const [nameErrorMessage, setNameErrorMessage] = React.useState("")
 
   const validateInputs = () => {
-    const email = document.getElementById("email") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
-    const name = document.getElementById("name") as HTMLInputElement;
+    const email = document.getElementById("email") as HTMLInputElement
+    const password = document.getElementById("password") as HTMLInputElement
+    const name = document.getElementById("name") as HTMLInputElement
 
-    let isValid = true;
+    let isValid = true
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage("Please enter a valid email address.");
-      isValid = false;
+      setEmailError(true)
+      setEmailErrorMessage("Please enter a valid email address.")
+      isValid = false
     } else {
-      setEmailError(false);
-      setEmailErrorMessage("");
+      setEmailError(false)
+      setEmailErrorMessage("")
     }
 
     if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage("Password must be at least 6 characters long.");
-      isValid = false;
+      setPasswordError(true)
+      setPasswordErrorMessage("Password must be at least 6 characters long.")
+      isValid = false
     } else {
-      setPasswordError(false);
-      setPasswordErrorMessage("");
+      setPasswordError(false)
+      setPasswordErrorMessage("")
     }
 
     if (!name.value || name.value.length < 1) {
-      setNameError(true);
-      setNameErrorMessage("Name is required.");
-      isValid = false;
+      setNameError(true)
+      setNameErrorMessage("Name is required.")
+      isValid = false
     } else {
-      setNameError(false);
-      setNameErrorMessage("");
+      setNameError(false)
+      setNameErrorMessage("")
     }
 
-    return isValid;
-  };
+    return isValid
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (nameError || emailError || passwordError) {
-      event.preventDefault();
-      return;
+      event.preventDefault()
+      return
     }
-    const data = new FormData(event.currentTarget);
+    const data = new FormData(event.currentTarget)
     console.log({
       name: data.get("name"),
       lastName: data.get("lastName"),
       email: data.get("email"),
       password: data.get("password"),
-    });
-  };
+    })
+  }
 
-  const { systemTheme, theme, setTheme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const { systemTheme, theme, setTheme } = useTheme()
+  const currentTheme = theme === "system" ? systemTheme : theme
 
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
     },
-  });
+  })
 
   const lightTheme = createTheme({
     palette: {
       mode: "light",
     },
-  });
+  })
 
   return (
     <ThemeProvider theme={currentTheme === "dark" ? darkTheme : lightTheme}>
@@ -207,8 +207,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             <Button
               fullWidth
               variant="outlined"
-              onClick={() =>
-                alert("Sign up with Google")}
+              onClick={() => alert("Sign up with Google")}
               startIcon={<GoogleIcon />}
             >
               Sign up with Google
@@ -231,5 +230,5 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
         </Card>
       </SignUpContainer>
     </ThemeProvider>
-  );
+  )
 }

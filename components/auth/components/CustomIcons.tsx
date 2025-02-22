@@ -1,4 +1,4 @@
-import SvgIcon from "@mui/material/SvgIcon";
+import SvgIcon from "@mui/material/SvgIcon"
 
 export function SitemarkIcon() {
   return (
@@ -48,7 +48,7 @@ export function SitemarkIcon() {
         />
       </svg>
     </SvgIcon>
-  );
+  )
 }
 
 export function FacebookIcon() {
@@ -84,7 +84,7 @@ export function FacebookIcon() {
         </defs>
       </svg>
     </SvgIcon>
-  );
+  )
 }
 
 export function GoogleIcon() {
@@ -115,5 +115,5 @@ export function GoogleIcon() {
         />
       </svg>
     </SvgIcon>
-  );
+  )
 }

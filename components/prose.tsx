@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import clsx from "clsx"
 
 const Prose = ({ html, className }: { html: string; className?: string }) => {
   return (
@@ -9,7 +9,7 @@ const Prose = ({ html, className }: { html: string; className?: string }) => {
       )}
       dangerouslySetInnerHTML={{ __html: html }}
     />
-  );
-};
+  )
+}
 
-export default Prose;
+export default Prose
