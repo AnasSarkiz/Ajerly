@@ -1,7 +1,6 @@
 "use client";
 import { Product } from "lib/shopify/types";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export function Slider({ items }: { items: Product[] }) {
@@ -28,7 +27,7 @@ export function Slider({ items }: { items: Product[] }) {
     return () => clearInterval(timer);
   }, []);
   return (
-    <div className="relative h-full flex min-h-screen w-full flex-col">
+    <div className="relative flex w-full flex-col">
       <section className="relative h-[70vh] overflow-hidden">
         <div
           className="absolute inset-0 transition-opacity duration-500"
@@ -87,27 +86,6 @@ export function Slider({ items }: { items: Product[] }) {
                   }`}
                 />
               </button>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section className="py-16">
-        <div className="container px-4">
-          <h2 className="text-3xl font-serif mb-8">Featured collection</h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <Link
-                key={i}
-                href={`menu${i}`}
-                className="group relative aspect-square overflow-hidden rounded-lg"
-              >
-                <Image
-                  src={"https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg"}
-                  alt="Featured plant"
-                  fill
-                  className="object-cover transition-transform group-hover:scale-105"
-                />
-              </Link>
             ))}
           </div>
         </div>

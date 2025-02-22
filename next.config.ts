@@ -21,6 +21,11 @@ export default {
         hostname: "community.softr.io",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
     ],
   },
 };
