@@ -32,10 +32,7 @@ export function Slider({ items }: { items: Product[] }) {
           style={{ opacity: isFading ? 0.5 : 1 }}
         >
           <Image
-            src={
-              slides[currentSlide]?.image ??
-              "https://community.softr.io/uploads/db9110/original/2X/7/74e6e7e382d0ff5d7773ca9a87e6f6f8817a68a6.jpeg"
-            }
+            src={slides[currentSlide]?.image || ""}
             alt="Hero image"
             fill
             className="object-cover"
@@ -48,14 +45,14 @@ export function Slider({ items }: { items: Product[] }) {
                 className="max-w-xl space-y-4 transition-opacity duration-500"
                 style={{ opacity: isFading ? 0 : 1 }}
               >
-                <h1 className="text-4xl font-serif text-white sm:text-5xl md:text-6xl uppercase">
+                <h1 className="text-4xl font-serif  text-green-800 dark:text-green-600  sm:text-5xl md:text-6xl uppercase">
                   {slides[currentSlide]?.title}
                 </h1>
-                <p className="text-lg text-white/90 uppercase">
+                <p className="text-lg text-green-800 dark:text-green-600 uppercase">
                   {slides[currentSlide]?.description}
                 </p>
                 <button
-                  className="bg-white text-black hover:bg-white/90 px-4 py-2 rounded"
+                  className="text-white bg-green-800 border border-green-700 hover:text-green-700 hover:bg-transparent focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:text-white dark:bg-green-600 dark:border-green-500 dark:hover:text-green-500 dark:hover:bg-transparent dark:focus:ring-green-800"
                   onClick={() => {
                     window.location.href = slides[currentSlide]?.path || ""
                   }}
@@ -81,7 +78,7 @@ export function Slider({ items }: { items: Product[] }) {
                 <div
                   className={`h-1 w-8 transition-all duration-300 ${
                     currentSlide === index
-                      ? "bg-white"
+                      ? "bg-green-700 dark:bg-green-400"
                       : "bg-white/40 group-hover:bg-white/60"
                   }`}
                 />
