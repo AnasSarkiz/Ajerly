@@ -28,7 +28,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" className={GeistSans.variable}>
-      <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
+      <body className="bg-neutral-50 text-black selection:bg-green-700 selection:text-white dark:bg-neutral-900 dark:text-white dark:selection:bg-green-400 dark:selection:text-white">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
