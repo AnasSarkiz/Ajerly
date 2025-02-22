@@ -1,272 +1,272 @@
-export type Maybe<T> = T | null;
+export type Maybe<T> = T | null
 
 export type Connection<T> = {
-  edges: Array<Edge<T>>;
-};
+  edges: Array<Edge<T>>
+}
 
 export type Edge<T> = {
-  node: T;
-};
+  node: T
+}
 
 export type Cart = Omit<ShopifyCart, "lines"> & {
-  lines: CartItem[];
-};
+  lines: CartItem[]
+}
 
 export type CartProduct = {
-  id: string;
-  handle: string;
-  title: string;
-  featuredImage: Image;
-};
+  id: string
+  handle: string
+  title: string
+  featuredImage: Image
+}
 
 export type CartItem = {
-  id: string | undefined;
-  quantity: number;
+  id: string | undefined
+  quantity: number
   cost: {
-    totalAmount: Money;
-  };
+    totalAmount: Money
+  }
   merchandise: {
-    id: string;
-    title: string;
+    id: string
+    title: string
     selectedOptions: {
-      name: string;
-      value: string;
-    }[];
-    product: CartProduct;
-  };
-};
+      name: string
+      value: string
+    }[]
+    product: CartProduct
+  }
+}
 
 export type Collection = ShopifyCollection & {
-  path: string;
-};
+  path: string
+}
 
 export type Image = {
-  url: string;
-  altText: string;
-  width: number;
-  height: number;
-};
+  url: string
+  altText: string
+  width: number
+  height: number
+}
 
 export type Menu = {
-  title: string;
-  path: string;
-};
+  title: string
+  path: string
+}
 
 export type Money = {
-  amount: string;
-  currencyCode: string;
-};
+  amount: string
+  currencyCode: string
+}
 
 export type Page = {
-  id: string;
-  title: string;
-  handle: string;
-  body: string;
-  bodySummary: string;
-  seo?: SEO;
-  createdAt: string;
-  updatedAt: string;
-};
+  id: string
+  title: string
+  handle: string
+  body: string
+  bodySummary: string
+  seo?: SEO
+  createdAt: string
+  updatedAt: string
+}
 
 export type Product = Omit<ShopifyProduct, "variants" | "images"> & {
-  variants: ProductVariant[];
-  images: Image[];
-};
+  variants: ProductVariant[]
+  images: Image[]
+}
 
 export type ProductOption = {
-  id: string;
-  name: string;
-  values: string[];
-};
+  id: string
+  name: string
+  values: string[]
+}
 
 export type ProductVariant = {
-  id: string;
-  title: string;
-  availableForSale: boolean;
+  id: string
+  title: string
+  availableForSale: boolean
   selectedOptions: {
-    name: string;
-    value: string;
-  }[];
-  price: Money;
-};
+    name: string
+    value: string
+  }[]
+  price: Money
+}
 
 export type SEO = {
-  title: string;
-  description: string;
-};
+  title: string
+  description: string
+}
 
 export type ShopifyCart = {
-  id: string | undefined;
-  checkoutUrl: string;
+  id: string | undefined
+  checkoutUrl: string
   cost: {
-    subtotalAmount: Money;
-    totalAmount: Money;
-    totalTaxAmount: Money;
-  };
-  lines: Connection<CartItem>;
-  totalQuantity: number;
-};
+    subtotalAmount: Money
+    totalAmount: Money
+    totalTaxAmount: Money
+  }
+  lines: Connection<CartItem>
+  totalQuantity: number
+}
 
 export type ShopifyCollection = {
-  handle: string;
-  title: string;
-  description: string;
-  seo: SEO;
-  updatedAt: string;
-};
+  handle: string
+  title: string
+  description: string
+  seo: SEO
+  updatedAt: string
+}
 
 export type ShopifyProduct = {
-  id: string;
-  handle: string;
-  availableForSale: boolean;
-  title: string;
-  description: string;
-  descriptionHtml: string;
-  options: ProductOption[];
+  id: string
+  handle: string
+  availableForSale: boolean
+  title: string
+  description: string
+  descriptionHtml: string
+  options: ProductOption[]
   priceRange: {
-    maxVariantPrice: Money;
-    minVariantPrice: Money;
-  };
-  variants: Connection<ProductVariant>;
-  featuredImage: Image;
-  images: Connection<Image>;
-  seo: SEO;
-  tags: string[];
-  updatedAt: string;
-};
+    maxVariantPrice: Money
+    minVariantPrice: Money
+  }
+  variants: Connection<ProductVariant>
+  featuredImage: Image
+  images: Connection<Image>
+  seo: SEO
+  tags: string[]
+  updatedAt: string
+}
 
 export type ShopifyCartOperation = {
   data: {
-    cart: ShopifyCart;
-  };
+    cart: ShopifyCart
+  }
   variables: {
-    cartId: string;
-  };
-};
+    cartId: string
+  }
+}
 
 export type ShopifyCreateCartOperation = {
-  data: { cartCreate: { cart: ShopifyCart } };
-};
+  data: { cartCreate: { cart: ShopifyCart } }
+}
 
 export type ShopifyAddToCartOperation = {
   data: {
     cartLinesAdd: {
-      cart: ShopifyCart;
-    };
-  };
+      cart: ShopifyCart
+    }
+  }
   variables: {
-    cartId: string;
+    cartId: string
     lines: {
-      merchandiseId: string;
-      quantity: number;
-    }[];
-  };
-};
+      merchandiseId: string
+      quantity: number
+    }[]
+  }
+}
 
 export type ShopifyRemoveFromCartOperation = {
   data: {
     cartLinesRemove: {
-      cart: ShopifyCart;
-    };
-  };
+      cart: ShopifyCart
+    }
+  }
   variables: {
-    cartId: string;
-    lineIds: string[];
-  };
-};
+    cartId: string
+    lineIds: string[]
+  }
+}
 
 export type ShopifyUpdateCartOperation = {
   data: {
     cartLinesUpdate: {
-      cart: ShopifyCart;
-    };
-  };
+      cart: ShopifyCart
+    }
+  }
   variables: {
-    cartId: string;
+    cartId: string
     lines: {
-      id: string;
-      merchandiseId: string;
-      quantity: number;
-    }[];
-  };
-};
+      id: string
+      merchandiseId: string
+      quantity: number
+    }[]
+  }
+}
 
 export type ShopifyCollectionOperation = {
   data: {
-    collection: ShopifyCollection;
-  };
+    collection: ShopifyCollection
+  }
   variables: {
-    handle: string;
-  };
-};
+    handle: string
+  }
+}
 
 export type ShopifyCollectionProductsOperation = {
   data: {
     collection: {
-      products: Connection<ShopifyProduct>;
-    };
-  };
+      products: Connection<ShopifyProduct>
+    }
+  }
   variables: {
-    handle: string;
-    reverse?: boolean;
-    sortKey?: string;
-  };
-};
+    handle: string
+    reverse?: boolean
+    sortKey?: string
+  }
+}
 
 export type ShopifyCollectionsOperation = {
   data: {
-    collections: Connection<ShopifyCollection>;
-  };
-};
+    collections: Connection<ShopifyCollection>
+  }
+}
 
 export type ShopifyMenuOperation = {
   data: {
     menu?: {
       items: {
-        title: string;
-        url: string;
-      }[];
-    };
-  };
+        title: string
+        url: string
+      }[]
+    }
+  }
   variables: {
-    handle: string;
-  };
-};
+    handle: string
+  }
+}
 
 export type ShopifyPageOperation = {
-  data: { pageByHandle: Page };
-  variables: { handle: string };
-};
+  data: { pageByHandle: Page }
+  variables: { handle: string }
+}
 
 export type ShopifyPagesOperation = {
   data: {
-    pages: Connection<Page>;
-  };
-};
+    pages: Connection<Page>
+  }
+}
 
 export type ShopifyProductOperation = {
-  data: { product: ShopifyProduct };
+  data: { product: ShopifyProduct }
   variables: {
-    handle: string;
-  };
-};
+    handle: string
+  }
+}
 
 export type ShopifyProductRecommendationsOperation = {
   data: {
-    productRecommendations: ShopifyProduct[];
-  };
+    productRecommendations: ShopifyProduct[]
+  }
   variables: {
-    productId: string;
-  };
-};
+    productId: string
+  }
+}
 
 export type ShopifyProductsOperation = {
   data: {
-    products: Connection<ShopifyProduct>;
-  };
+    products: Connection<ShopifyProduct>
+  }
   variables: {
-    query?: string;
-    reverse?: boolean;
-    sortKey?: string;
-  };
-};
+    query?: string
+    reverse?: boolean
+    sortKey?: string
+  }
+}

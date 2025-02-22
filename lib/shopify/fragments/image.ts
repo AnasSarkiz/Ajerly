@@ -5,6 +5,6 @@ const imageFragment = /* GraphQL */ `
     width
     height
   }
-`;
+`
 
-export default imageFragment;
+export default imageFragment

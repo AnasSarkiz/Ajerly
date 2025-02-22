@@ -1,5 +1,5 @@
-import clsx from "clsx";
-import LogoIcon from "./icons/logo";
+import clsx from "clsx"
+import LogoIcon from "./icons/logo"
 
 export default function LogoSquare({ size }: { size?: "sm" | undefined }) {
   return (
@@ -19,5 +19,5 @@ export default function LogoSquare({ size }: { size?: "sm" | undefined }) {
         })}
       />
     </div>
-  );
+  )
 }

@@ -1,26 +1,26 @@
-import { GridTileImage } from "components/grid/tile";
-import Footer from "components/layout/footer";
-import { Gallery } from "components/product/gallery";
-import { ProductProvider } from "components/product/product-context";
-import { ProductDescription } from "components/product/product-description";
-import { HIDDEN_PRODUCT_TAG } from "lib/constants";
-import { getProduct, getProductRecommendations } from "lib/shopify";
-import { Image } from "lib/shopify/types";
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import { GridTileImage } from "components/grid/tile"
+import Footer from "components/layout/footer"
+import { Gallery } from "components/product/gallery"
+import { ProductProvider } from "components/product/product-context"
+import { ProductDescription } from "components/product/product-description"
+import { HIDDEN_PRODUCT_TAG } from "lib/constants"
+import { getProduct, getProductRecommendations } from "lib/shopify"
+import { Image } from "lib/shopify/types"
+import type { Metadata } from "next"
+import Link from "next/link"
+import { notFound } from "next/navigation"
+import { Suspense } from "react"
 
 export async function generateMetadata(props: {
-  params: Promise<{ handle: string }>;
+  params: Promise<{ handle: string }>
 }): Promise<Metadata> {
-  const params = await props.params;
-  const product = await getProduct(params.handle);
+  const params = await props.params
+  const product = await getProduct(params.handle)
 
-  if (!product) return notFound();
+  if (!product) return notFound()
 
-  const { url, width, height, altText: alt } = product.featuredImage || {};
-  const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG);
+  const { url, width, height, altText: alt } = product.featuredImage || {}
+  const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG)
 
   return {
     title: product.seo.title || product.title,
@@ -35,26 +35,26 @@ export async function generateMetadata(props: {
     },
     openGraph: url
       ? {
-        images: [
-          {
-            url,
-            width,
-            height,
-            alt,
-          },
-        ],
-      }
+          images: [
+            {
+              url,
+              width,
+              height,
+              alt,
+            },
+          ],
+        }
       : null,
-  };
+  }
 }
 
 export default async function ProductPage(props: {
-  params: Promise<{ handle: string }>;
+  params: Promise<{ handle: string }>
 }) {
-  const params = await props.params;
-  const product = await getProduct(params.handle);
+  const params = await props.params
+  const product = await getProduct(params.handle)
 
-  if (!product) return notFound();
+  if (!product) return notFound()
 
   const productJsonLd = {
     "@context": "https://schema.org",
@@ -71,7 +71,7 @@ export default async function ProductPage(props: {
       highPrice: product.priceRange.maxVariantPrice.amount,
       lowPrice: product.priceRange.minVariantPrice.amount,
     },
-  };
+  }
 
   return (
     <ProductProvider>
@@ -108,13 +108,13 @@ export default async function ProductPage(props: {
       </div>
       <Footer />
     </ProductProvider>
-  );
+  )
 }
 
 async function RelatedProducts({ id }: { id: string }) {
-  const relatedProducts = await getProductRecommendations(id);
+  const relatedProducts = await getProductRecommendations(id)
 
-  if (!relatedProducts.length) return null;
+  if (!relatedProducts.length) return null
 
   return (
     <div className="py-8">
@@ -146,5 +146,5 @@ async function RelatedProducts({ id }: { id: string }) {
         ))}
       </ul>
     </div>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import productFragment from "../fragments/product";
-import seoFragment from "../fragments/seo";
+import productFragment from "../fragments/product"
+import seoFragment from "../fragments/seo"
 
 const collectionFragment = /* GraphQL */ `
   fragment collection on Collection {
@@ -12,7 +12,7 @@ const collectionFragment = /* GraphQL */ `
     updatedAt
   }
   ${seoFragment}
-`;
+`
 
 export const getCollectionQuery = /* GraphQL */ `
   query getCollection($handle: String!) {
@@ -21,7 +21,7 @@ export const getCollectionQuery = /* GraphQL */ `
     }
   }
   ${collectionFragment}
-`;
+`
 
 export const getCollectionsQuery = /* GraphQL */ `
   query getCollections {
@@ -34,7 +34,7 @@ export const getCollectionsQuery = /* GraphQL */ `
     }
   }
   ${collectionFragment}
-`;
+`
 
 export const getCollectionProductsQuery = /* GraphQL */ `
   query getCollectionProducts(
@@ -53,4 +53,4 @@ export const getCollectionProductsQuery = /* GraphQL */ `
     }
   }
   ${productFragment}
-`;
+`

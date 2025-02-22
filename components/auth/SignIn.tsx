@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import MuiCard from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
-import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
-import Link from "@mui/material/Link";
-import Stack from "@mui/material/Stack";
-import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { useTheme } from "next-themes";
-import NextLink from "next/link";
-import * as React from "react";
-import ColorModeSelect from "../shared-theme/ColorModeSelect";
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import MuiCard from "@mui/material/Card"
+import Checkbox from "@mui/material/Checkbox"
+import Divider from "@mui/material/Divider"
+import FormControl from "@mui/material/FormControl"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import FormLabel from "@mui/material/FormLabel"
+import Link from "@mui/material/Link"
+import Stack from "@mui/material/Stack"
+import { createTheme, styled, ThemeProvider } from "@mui/material/styles"
+import TextField from "@mui/material/TextField"
+import Typography from "@mui/material/Typography"
+import { useTheme } from "next-themes"
+import NextLink from "next/link"
+import * as React from "react"
+import ColorModeSelect from "../shared-theme/ColorModeSelect"
 import {
   FacebookIcon,
   GoogleIcon,
   SitemarkIcon,
-} from "./components/CustomIcons";
-import ForgotPassword from "./components/ForgotPassword";
+} from "./components/CustomIcons"
+import ForgotPassword from "./components/ForgotPassword"
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -41,7 +41,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
     boxShadow:
       "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
   }),
-}));
+}))
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
   height: "100%",
@@ -50,76 +50,76 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(4),
   },
-}));
+}))
 
 export default function SignIn(props: { disableCustomTheme?: boolean }) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
-  const [open, setOpen] = React.useState(false);
+  const [emailError, setEmailError] = React.useState(false)
+  const [emailErrorMessage, setEmailErrorMessage] = React.useState("")
+  const [passwordError, setPasswordError] = React.useState(false)
+  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("")
+  const [open, setOpen] = React.useState(false)
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (emailError || passwordError) {
-      event.preventDefault();
-      return;
+      event.preventDefault()
+      return
     }
-    const data = new FormData(event.currentTarget);
+    const data = new FormData(event.currentTarget)
     console.log({
       email: data.get("email"),
       password: data.get("password"),
-    });
-  };
+    })
+  }
 
   const validateInputs = () => {
-    const email = document.getElementById("email") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
+    const email = document.getElementById("email") as HTMLInputElement
+    const password = document.getElementById("password") as HTMLInputElement
 
-    let isValid = true;
+    let isValid = true
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage("Please enter a valid email address.");
-      isValid = false;
+      setEmailError(true)
+      setEmailErrorMessage("Please enter a valid email address.")
+      isValid = false
     } else {
-      setEmailError(false);
-      setEmailErrorMessage("");
+      setEmailError(false)
+      setEmailErrorMessage("")
     }
 
     if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage("Password must be at least 6 characters long.");
-      isValid = false;
+      setPasswordError(true)
+      setPasswordErrorMessage("Password must be at least 6 characters long.")
+      isValid = false
     } else {
-      setPasswordError(false);
-      setPasswordErrorMessage("");
+      setPasswordError(false)
+      setPasswordErrorMessage("")
     }
 
-    return isValid;
-  };
+    return isValid
+  }
 
-  const { systemTheme, theme, setTheme } = useTheme();
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const { systemTheme, theme, setTheme } = useTheme()
+  const currentTheme = theme === "system" ? systemTheme : theme
 
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
     },
-  });
+  })
 
   const lightTheme = createTheme({
     palette: {
       mode: "light",
     },
-  });
+  })
 
   return (
     <ThemeProvider theme={currentTheme === "dark" ? darkTheme : lightTheme}>
@@ -209,8 +209,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             <Button
               fullWidth
               variant="outlined"
-              onClick={() =>
-                alert("Sign in with Google")}
+              onClick={() => alert("Sign in with Google")}
               startIcon={<GoogleIcon />}
             >
               Sign in with Google
@@ -233,5 +232,5 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
         </Card>
       </SignInContainer>
     </ThemeProvider>
-  );
+  )
 }

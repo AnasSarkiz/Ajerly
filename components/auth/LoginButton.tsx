@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import { UserIcon } from "@heroicons/react/24/outline";
-import clsx from "clsx";
-import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+import { UserIcon } from "@heroicons/react/24/outline"
+import clsx from "clsx"
+import NextLink from "next/link"
+import { usePathname } from "next/navigation"
 
 export default function LoginButton({ className }: { className?: string }) {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
-  if (pathname.split("/").includes("auth")) return null;
+  if (pathname.split("/").includes("auth")) return null
 
   return (
     <NextLink
@@ -24,5 +24,5 @@ export default function LoginButton({ className }: { className?: string }) {
         )}
       />
     </NextLink>
-  );
+  )
 }

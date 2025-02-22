@@ -2,16 +2,16 @@ import {
   HIDDEN_PRODUCT_TAG,
   SHOPIFY_GRAPHQL_API_ENDPOINT,
   TAGS,
-} from "lib/constants";
-import { isShopifyError } from "lib/type-guards";
-import { ensureStartsWith } from "lib/utils";
+} from "lib/constants"
+import { isShopifyError } from "lib/type-guards"
+import { ensureStartsWith } from "lib/utils"
 import {
   revalidateTag,
   unstable_cacheLife as cacheLife,
   unstable_cacheTag as cacheTag,
-} from "next/cache";
-import { headers } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+} from "next/cache"
+import { headers } from "next/headers"
+import { NextRequest, NextResponse } from "next/server"
 import {
   Collection,
   Connection,
@@ -21,25 +21,26 @@ import {
   Product,
   ShopifyCollection,
   ShopifyProduct,
-} from "./types";
+} from "./types"
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
   ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, "https://")
-  : "";
-const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
-const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
+  : ""
+const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`
+const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!
 
-type ExtractVariables<T> = T extends { variables: object } ? T["variables"]
-  : never;
+type ExtractVariables<T> = T extends { variables: object }
+  ? T["variables"]
+  : never
 
 export async function shopifyFetch<T>({
   headers,
   query,
   variables,
 }: {
-  headers?: HeadersInit;
-  query: string;
-  variables?: ExtractVariables<T>;
+  headers?: HeadersInit
+  query: string
+  variables?: ExtractVariables<T>
 }): Promise<{ status: number; body: T } | never> {
   try {
     const result = await fetch(endpoint, {
@@ -53,18 +54,18 @@ export async function shopifyFetch<T>({
         ...(query && { query }),
         ...(variables && { variables }),
       }),
-    });
+    })
 
-    const body = await result.json();
+    const body = await result.json()
 
     if (body.errors) {
-      throw body.errors[0];
+      throw body.errors[0]
     }
 
     return {
       status: result.status,
       body,
-    };
+    }
   } catch (e) {
     if (isShopifyError(e)) {
       throw {
@@ -72,31 +73,31 @@ export async function shopifyFetch<T>({
         status: e.status || 500,
         message: e.message,
         query,
-      };
+      }
     }
 
     throw {
       error: e,
       query,
-    };
+    }
   }
 }
 
 const removeEdgesAndNodes = <T>(array: Connection<T>): T[] => {
-  return array.edges.map((edge) => edge?.node);
-};
+  return array.edges.map((edge) => edge?.node)
+}
 
 const reshapeImages = (images: Connection<Image>, productTitle: string) => {
-  const flattened = removeEdgesAndNodes(images);
+  const flattened = removeEdgesAndNodes(images)
 
   return flattened.map((image) => {
-    const filename = image.url.match(/.*\/(.*)\..*/)?.[1];
+    const filename = image.url.match(/.*\/(.*)\..*/)?.[1]
     return {
       ...image,
       altText: image.altText || `${productTitle} - ${filename}`,
-    };
-  });
-};
+    }
+  })
+}
 
 const reshapeProduct = (
   product: ShopifyProduct,
@@ -106,33 +107,33 @@ const reshapeProduct = (
     !product ||
     (filterHiddenProducts && product.tags.includes(HIDDEN_PRODUCT_TAG))
   ) {
-    return undefined;
+    return undefined
   }
 
-  const { images, variants, ...rest } = product;
+  const { images, variants, ...rest } = product
 
   return {
     ...rest,
     images: reshapeImages(images, product.title),
     variants: removeEdgesAndNodes(variants),
-  };
-};
+  }
+}
 
 const reshapeProducts = (products: ShopifyProduct[]) => {
-  const reshapedProducts = [];
+  const reshapedProducts = []
 
   for (const product of products) {
     if (product) {
-      const reshapedProduct = reshapeProduct(product);
+      const reshapedProduct = reshapeProduct(product)
 
       if (reshapedProduct) {
-        reshapedProducts.push(reshapedProduct);
+        reshapedProducts.push(reshapedProduct)
       }
     }
   }
 
-  return reshapedProducts;
-};
+  return reshapedProducts
+}
 // const reshapeCollection = (
 //   collection: ShopifyCollection,
 // ): Collection | undefined => {
@@ -161,9 +162,9 @@ const reshapeProducts = (products: ShopifyProduct[]) => {
 export async function getCollection(
   handle: string,
 ): Promise<Collection | undefined> {
-  "use cache";
-  cacheTag(TAGS.collections);
-  cacheLife("days");
+  "use cache"
+  cacheTag(TAGS.collections)
+  cacheLife("days")
 
   // const res = await shopifyFetch<ShopifyCollectionOperation>({
   //   query: getCollectionQuery,
@@ -180,7 +181,7 @@ export async function getCollection(
     seo: { title: "title", description: "description" },
     updatedAt: new Date().toISOString(),
     path: `/${handle}`,
-  };
+  }
 }
 
 export async function getCollectionProducts({
@@ -188,13 +189,13 @@ export async function getCollectionProducts({
   reverse,
   sortKey,
 }: {
-  collection: string;
-  reverse?: boolean;
-  sortKey?: string;
+  collection: string
+  reverse?: boolean
+  sortKey?: string
 }): Promise<Product[]> {
-  "use cache";
-  cacheTag(TAGS.collections, TAGS.products);
-  cacheLife("days");
+  "use cache"
+  cacheTag(TAGS.collections, TAGS.products)
+  cacheLife("days")
 
   // const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
   //   query: getCollectionProductsQuery,
@@ -217,13 +218,15 @@ export async function getCollectionProducts({
     id: id.toString(),
     title: `title${id}`,
     handle: collection,
-    variants: [{
-      id: id.toString(),
-      price: { amount: "10", currencyCode: "USD" },
-      title: `title${id}`,
-      availableForSale: false,
-      selectedOptions: [],
-    }],
+    variants: [
+      {
+        id: id.toString(),
+        price: { amount: "10", currencyCode: "USD" },
+        title: `title${id}`,
+        availableForSale: false,
+        selectedOptions: [],
+      },
+    ],
     images: [],
     tags: [],
     seo: { title: `title${id}`, description: `description${id}` },
@@ -237,19 +240,18 @@ export async function getCollectionProducts({
       maxVariantPrice: { amount: "10", currencyCode: "USD" },
     },
     featuredImage: {
-      url:
-        "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
+      url: "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
       altText: "altText",
       width: 800,
       height: 600,
     },
-  }));
+  }))
 }
 
 export async function getCollections(): Promise<Collection[]> {
-  "use cache";
-  cacheTag(TAGS.collections);
-  cacheLife("days");
+  "use cache"
+  cacheTag(TAGS.collections)
+  cacheLife("days")
 
   // const res = await shopifyFetch<ShopifyCollectionsOperation>({
   //   query: getCollectionsQuery
@@ -283,13 +285,13 @@ export async function getCollections(): Promise<Collection[]> {
     seo: { title: `title${id}`, description: `description${id}` },
     path: `/title${id}`,
     updatedAt: new Date().toISOString(),
-  }));
+  }))
 }
 
 export async function getMenu(handle: string): Promise<Menu[]> {
-  "use cache";
-  cacheTag(TAGS.collections);
-  cacheLife("days");
+  "use cache"
+  cacheTag(TAGS.collections)
+  cacheLife("days")
 
   // const res = await shopifyFetch<ShopifyMenuOperation>({
   //   query: getMenuQuery,
@@ -310,7 +312,7 @@ export async function getMenu(handle: string): Promise<Menu[]> {
   return [1, 2, 3, 4, 5].map((id) => ({
     title: `menu${id}`,
     path: `/menu${id}`,
-  }));
+  }))
 }
 
 export async function getPage(handle: string): Promise<Page> {
@@ -328,7 +330,7 @@ export async function getPage(handle: string): Promise<Page> {
     createdAt: new Date().toISOString(),
     handle: handle,
     updatedAt: new Date().toISOString(),
-  };
+  }
 }
 
 export async function getPages(): Promise<Page[]> {
@@ -345,13 +347,13 @@ export async function getPages(): Promise<Page[]> {
     createdAt: new Date().toISOString(),
     handle: `menu${id}`,
     updatedAt: new Date().toISOString(),
-  }));
+  }))
 }
 
 export async function getProduct(handle: string): Promise<Product | undefined> {
-  "use cache";
-  cacheTag(TAGS.products);
-  cacheLife("days");
+  "use cache"
+  cacheTag(TAGS.products)
+  cacheLife("days")
 
   // const res = await shopifyFetch<ShopifyProductOperation>({
   //   query: getProductQuery,
@@ -365,13 +367,15 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
     id: "id",
     title: `title ${handle}`,
     handle: handle,
-    variants: [{
-      id: "id",
-      price: { amount: "10", currencyCode: "USD" },
-      title: "title",
-      availableForSale: true,
-      selectedOptions: [],
-    }],
+    variants: [
+      {
+        id: "id",
+        price: { amount: "10", currencyCode: "USD" },
+        title: "title",
+        availableForSale: true,
+        selectedOptions: [],
+      },
+    ],
     images: [],
     tags: [],
     seo: { title: "title", description: "description" },
@@ -385,21 +389,20 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
       maxVariantPrice: { amount: "10", currencyCode: "USD" },
     },
     featuredImage: {
-      url:
-        "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
+      url: "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
       altText: "altText",
       width: 800,
       height: 600,
     },
-  };
+  }
 }
 
 export async function getProductRecommendations(
   productId: string,
 ): Promise<Product[]> {
-  "use cache";
-  cacheTag(TAGS.products);
-  cacheLife("days");
+  "use cache"
+  cacheTag(TAGS.products)
+  cacheLife("days")
 
   // const res = await shopifyFetch<ShopifyProductRecommendationsOperation>({
   //   query: getProductRecommendationsQuery,
@@ -413,13 +416,15 @@ export async function getProductRecommendations(
     id: id.toString(),
     title: `title${id}`,
     handle: `handle${id}`,
-    variants: [{
-      id: id.toString(),
-      price: { amount: "10", currencyCode: "USD" },
-      title: `title${id}`,
-      availableForSale: false,
-      selectedOptions: [],
-    }],
+    variants: [
+      {
+        id: id.toString(),
+        price: { amount: "10", currencyCode: "USD" },
+        title: `title${id}`,
+        availableForSale: false,
+        selectedOptions: [],
+      },
+    ],
     images: [],
     tags: [],
     seo: { title: `title${id}`, description: `description${id}` },
@@ -433,13 +438,12 @@ export async function getProductRecommendations(
       maxVariantPrice: { amount: "10", currencyCode: "USD" },
     },
     featuredImage: {
-      url:
-        "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
+      url: "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
       altText: "altText",
       width: 800,
       height: 600,
     },
-  }));
+  }))
 }
 
 export async function getProducts({
@@ -447,13 +451,13 @@ export async function getProducts({
   reverse,
   sortKey,
 }: {
-  query?: string;
-  reverse?: boolean;
-  sortKey?: string;
+  query?: string
+  reverse?: boolean
+  sortKey?: string
 }): Promise<Product[]> {
-  "use cache";
-  cacheTag(TAGS.products);
-  cacheLife("days");
+  "use cache"
+  cacheTag(TAGS.products)
+  cacheLife("days")
 
   // const res = await shopifyFetch<ShopifyProductsOperation>({
   //   query: getProductsQuery,
@@ -469,13 +473,15 @@ export async function getProducts({
     id: id.toString(),
     title: `title${id}`,
     handle: `menu${id}`,
-    variants: [{
-      id: id.toString(),
-      price: { amount: "10", currencyCode: "USD" },
-      title: `title${id}`,
-      availableForSale: false,
-      selectedOptions: [],
-    }],
+    variants: [
+      {
+        id: id.toString(),
+        price: { amount: "10", currencyCode: "USD" },
+        title: `title${id}`,
+        availableForSale: false,
+        selectedOptions: [],
+      },
+    ],
     images: [],
     tags: [],
     seo: { title: `title${id}`, description: `description${id}` },
@@ -489,13 +495,12 @@ export async function getProducts({
       maxVariantPrice: { amount: "10", currencyCode: "USD" },
     },
     featuredImage: {
-      url:
-        "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
+      url: "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
       altText: "altText",
       width: 800,
       height: 600,
     },
-  }));
+  }))
 }
 
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
@@ -506,34 +511,34 @@ export async function revalidate(req: NextRequest): Promise<NextResponse> {
     "collections/create",
     "collections/delete",
     "collections/update",
-  ];
+  ]
   const productWebhooks = [
     "products/create",
     "products/delete",
     "products/update",
-  ];
-  const topic = (await headers()).get("x-shopify-topic") || "unknown";
-  const secret = req.nextUrl.searchParams.get("secret");
-  const isCollectionUpdate = collectionWebhooks.includes(topic);
-  const isProductUpdate = productWebhooks.includes(topic);
+  ]
+  const topic = (await headers()).get("x-shopify-topic") || "unknown"
+  const secret = req.nextUrl.searchParams.get("secret")
+  const isCollectionUpdate = collectionWebhooks.includes(topic)
+  const isProductUpdate = productWebhooks.includes(topic)
 
   if (!secret || secret !== process.env.SHOPIFY_REVALIDATION_SECRET) {
-    console.error("Invalid revalidation secret.");
-    return NextResponse.json({ status: 401 });
+    console.error("Invalid revalidation secret.")
+    return NextResponse.json({ status: 401 })
   }
 
   if (!isCollectionUpdate && !isProductUpdate) {
     // We don't need to revalidate anything for any other topics.
-    return NextResponse.json({ status: 200 });
+    return NextResponse.json({ status: 200 })
   }
 
   if (isCollectionUpdate) {
-    revalidateTag(TAGS.collections);
+    revalidateTag(TAGS.collections)
   }
 
   if (isProductUpdate) {
-    revalidateTag(TAGS.products);
+    revalidateTag(TAGS.products)
   }
 
-  return NextResponse.json({ status: 200, revalidated: true, now: Date.now() });
+  return NextResponse.json({ status: 200, revalidated: true, now: Date.now() })
 }

@@ -1,4 +1,4 @@
-import seoFragment from "../fragments/seo";
+import seoFragment from "../fragments/seo"
 
 const pageFragment = /* GraphQL */ `
   fragment page on Page {
@@ -16,7 +16,7 @@ const pageFragment = /* GraphQL */ `
     }
   }
   ${seoFragment}
-`;
+`
 
 export const getPageQuery = /* GraphQL */ `
   query getPage($handle: String!) {
@@ -25,7 +25,7 @@ export const getPageQuery = /* GraphQL */ `
     }
   }
   ${pageFragment}
-`;
+`
 
 export const getPagesQuery = /* GraphQL */ `
   query getPages {
@@ -38,4 +38,4 @@ export const getPagesQuery = /* GraphQL */ `
     }
   }
   ${pageFragment}
-`;
+`

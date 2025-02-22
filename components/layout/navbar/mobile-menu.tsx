@@ -1,34 +1,34 @@
-"use client";
+"use client"
 
-import { Dialog, Transition } from "@headlessui/react";
-import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import { Fragment, Suspense, useEffect, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react"
+import Link from "next/link"
+import { usePathname, useSearchParams } from "next/navigation"
+import { Fragment, Suspense, useEffect, useState } from "react"
 
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Menu } from "lib/shopify/types";
-import Search, { SearchSkeleton } from "./search";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
+import { Menu } from "lib/shopify/types"
+import Search, { SearchSkeleton } from "./search"
 
 export default function MobileMenu({ menu }: { menu: Menu[] }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [isOpen, setIsOpen] = useState(false);
-  const openMobileMenu = () => setIsOpen(true);
-  const closeMobileMenu = () => setIsOpen(false);
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const [isOpen, setIsOpen] = useState(false)
+  const openMobileMenu = () => setIsOpen(true)
+  const closeMobileMenu = () => setIsOpen(false)
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
-        setIsOpen(false);
+        setIsOpen(false)
       }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [isOpen]);
+    }
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [isOpen])
 
   useEffect(() => {
-    setIsOpen(false);
-  }, [pathname, searchParams]);
+    setIsOpen(false)
+  }, [pathname, searchParams])
 
   return (
     <>
@@ -76,31 +76,29 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                     <Search />
                   </Suspense>
                 </div>
-                {menu.length
-                  ? (
-                    <ul className="flex w-full flex-col">
-                      {menu.map((item: Menu) => (
-                        <li
-                          className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
-                          key={item.title}
+                {menu.length ? (
+                  <ul className="flex w-full flex-col">
+                    {menu.map((item: Menu) => (
+                      <li
+                        className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
+                        key={item.title}
+                      >
+                        <Link
+                          href={item.path}
+                          prefetch={true}
+                          onClick={closeMobileMenu}
                         >
-                          <Link
-                            href={item.path}
-                            prefetch={true}
-                            onClick={closeMobileMenu}
-                          >
-                            {item.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )
-                  : null}
+                          {item.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </div>
             </Dialog.Panel>
           </Transition.Child>
         </Dialog>
       </Transition>
     </>
-  );
+  )
 }

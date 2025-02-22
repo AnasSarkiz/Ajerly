@@ -1,4 +1,4 @@
-import productFragment from "../fragments/product";
+import productFragment from "../fragments/product"
 
 export const getProductQuery = /* GraphQL */ `
   query getProduct($handle: String!) {
@@ -7,7 +7,7 @@ export const getProductQuery = /* GraphQL */ `
     }
   }
   ${productFragment}
-`;
+`
 
 export const getProductsQuery = /* GraphQL */ `
   query getProducts(
@@ -24,7 +24,7 @@ export const getProductsQuery = /* GraphQL */ `
     }
   }
   ${productFragment}
-`;
+`
 
 export const getProductRecommendationsQuery = /* GraphQL */ `
   query getProductRecommendations($productId: ID!) {
@@ -33,4 +33,4 @@ export const getProductRecommendationsQuery = /* GraphQL */ `
     }
   }
   ${productFragment}
-`;
+`
