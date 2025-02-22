@@ -1,4 +1,4 @@
-name: Next.js CI/CD
+name: Next.js Preview Deployment
 
 on:
   push:
@@ -13,20 +13,34 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
 
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm install
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
+      # - name: Install dependencies
+      #   run: npm install
+      - name: Install dependencies
+        run: bun install
+
+      # - name: Run tests
+      #   run: npm test
       - name: Run tests
-        run: npm test
+        env:
+          PLUTU_ACCESS_TOKEN: ${{ secrets.PLUTU_ACCESS_TOKEN }}
+          PLUTU_API_KEY: ${{ secrets.PLUTU_API_KEY }}
+        run: bun test
 
       - name: Build Next.js project
-        run: npm run build
+        run: bun run build
 
   deploy:
     needs: build-and-test
@@ -42,8 +56,13 @@ jobs:
         with:
           node-version: 18
 
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
       - name: Install Vercel CLI
-        run: npm install -g vercel
+        run: bun install -g vercel
 
       - name: Deploy to Vercel
         run: vercel --token=${{ secrets.VERCEL_TOKEN }} --prod
