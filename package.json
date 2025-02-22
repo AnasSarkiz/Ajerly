@@ -5,7 +5,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "format": "biome format . --write"
+    "format": "biome format . --write",
+    "format:check": "biome format ."
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
