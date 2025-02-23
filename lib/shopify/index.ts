@@ -180,7 +180,7 @@ export async function getCollection(
     title: handle,
     seo: { title: "title", description: "description" },
     updatedAt: new Date().toISOString(),
-    path: `/${handle}`,
+    path: `/search/${handle}`,
   }
 }
 
@@ -214,14 +214,14 @@ export async function getCollectionProducts({
   // return reshapeProducts(
   //   removeEdgesAndNodes(res.body.data.collection.products)
   // );
-  return [1, 2, 3, 4, 5].map((id) => ({
-    id: id.toString(),
-    title: `title${id}`,
+  return [1, 2, 3, 4, 5,6].map((id) => ({
+    id: `${collection}${id}`,
+    title: `Product ${id}`,
     handle: collection,
     variants: [
       {
         id: id.toString(),
-        price: { amount: "10", currencyCode: "USD" },
+        price: { amount: `${id}0`, currencyCode: "LYD" },
         title: `title${id}`,
         availableForSale: false,
         selectedOptions: [],
@@ -236,8 +236,8 @@ export async function getCollectionProducts({
     descriptionHtml: `descriptionHtml${id}`,
     options: [],
     priceRange: {
-      minVariantPrice: { amount: "0", currencyCode: "USD" },
-      maxVariantPrice: { amount: "10", currencyCode: "USD" },
+      minVariantPrice: { amount: `${id}`, currencyCode: "LYD" },
+      maxVariantPrice: { amount: `${id}0`, currencyCode: "LYD" },
     },
     featuredImage: {
       url: `https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-${id}_large.png?v=1530129132`,
@@ -278,12 +278,12 @@ export async function getCollections(): Promise<Collection[]> {
 
   // return collections;
   return [1, 2, 3, 4, 5].map((id) => ({
-    id: id.toString(),
-    handle: `menu${id}`,
+    id: `${id}`,
+    handle: `title${id}`,
     title: `title${id}`,
     description: `description${id}`,
     seo: { title: `title${id}`, description: `description${id}` },
-    path: `/title${id}`,
+    path: `/search/title${id}`,
     updatedAt: new Date().toISOString(),
   }))
 }
@@ -310,8 +310,8 @@ export async function getMenu(handle: string): Promise<Menu[]> {
   //   })) || []
   // );
   return [1, 2, 3, 4, 5].map((id) => ({
-    title: `menu${id}`,
-    path: `/menu${id}`,
+    title: `menu ${id}`,
+    path: `/search/menu${id}`,
   }))
 }
 
@@ -364,9 +364,9 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
 
   // return reshapeProduct(res.body.data.product, false);
   return {
-    id: "id",
+    id: `id ${handle}`,
     title: `title ${handle}`,
-    handle: handle,
+    handle: "handle",
     variants: [
       {
         id: "id",
@@ -415,7 +415,7 @@ export async function getProductRecommendations(
   return [1, 2, 3, 4, 5].map((id) => ({
     id: id.toString(),
     title: `title${id}`,
-    handle: `handle${id}`,
+    handle: `${productId}`,
     variants: [
       {
         id: id.toString(),
@@ -438,7 +438,7 @@ export async function getProductRecommendations(
       maxVariantPrice: { amount: "10", currencyCode: "USD" },
     },
     featuredImage: {
-      url: "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-2_large.png?v=1530129132",
+      url: `https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-${id}_large.png?v=1530129132`,
       altText: "altText",
       width: 800,
       height: 600,
@@ -470,7 +470,7 @@ export async function getProducts({
 
   // return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
   return [1, 2, 3, 4, 5].map((id) => ({
-    id: id.toString(),
+    id: `id${id}`,
     title: `title${id}`,
     handle: `menu${id}`,
     variants: [
