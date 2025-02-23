@@ -214,7 +214,7 @@ export async function getCollectionProducts({
   // return reshapeProducts(
   //   removeEdgesAndNodes(res.body.data.collection.products)
   // );
-  return [1, 2, 3, 4, 5,6].map((id) => ({
+  return [1, 2, 3, 4, 5, 6].map((id) => ({
     id: `${collection}${id}`,
     title: `Product ${id}`,
     handle: collection,
