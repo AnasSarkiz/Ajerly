@@ -1,9 +1,9 @@
 import { getCollectionProducts, getMenu } from "lib/shopify"
-import { Slider } from "./silder"
+import { Slider } from "./slider"
 
 export async function HomeSlider() {
   const homepageItems = await getCollectionProducts({
-    collection: "hidden-homepage-featured-items",
+    collection: "home-slider",
   })
   //   const homepageMenu = await getMenu("handle2");
 
