@@ -67,16 +67,29 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     setOpen(false)
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     if (emailError || passwordError) {
       event.preventDefault()
       return
     }
+    event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    })
+    const email = data.get("email") as string
+    const password = data.get("password") as string
+
+    try {
+      const response = await fetch("/api/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      })
+      const res = await response.json()
+      console.log("user: ", res.user, "token: ", res.token)
+    } catch (error) {
+      console.error("Error:", error)
+    }
   }
 
   const validateInputs = () => {
