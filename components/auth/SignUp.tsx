@@ -21,6 +21,7 @@ import {
   GoogleIcon,
   SitemarkIcon,
 } from "./components/CustomIcons"
+import { signUp } from "lib/auth/auth"
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -95,18 +96,31 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     return isValid
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     if (nameError || emailError || passwordError) {
       event.preventDefault()
       return
     }
+    event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      name: data.get("name"),
-      lastName: data.get("lastName"),
-      email: data.get("email"),
-      password: data.get("password"),
-    })
+    const name = data.get("name") as string
+    const email = data.get("email") as string
+    const password = data.get("password") as string
+
+    try {
+      const response = await fetch("api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, username: name }),
+      })
+      console.log(response)
+      const res = await response.json()
+      console.log("user: ", res.user, "token: ", res.token)
+    } catch (error) {
+      console.error("Error:", error)
+    }
   }
 
   const { systemTheme, theme, setTheme } = useTheme()
