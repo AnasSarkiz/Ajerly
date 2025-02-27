@@ -1,4 +1,4 @@
-name: Next.js CI/CD
+name: Next.js Preview Deployment
 
 on:
   push:
@@ -19,14 +19,33 @@ jobs:
         with:
           node-version: 18
 
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
       - name: Install dependencies
-        run: npm install
+        run: bun install
 
       - name: Run tests
-        run: npm test
+        env:
+          PLUTU_ACCESS_TOKEN: ${{ secrets.PLUTU_ACCESS_TOKEN }}
+          PLUTU_API_KEY: ${{ secrets.PLUTU_API_KEY }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          COMPANY_NAME: ${{ secrets.COMPANY_NAME }}
+          SITE_NAME: ${{ secrets.SITE_NAME }}
+        run: bun test
 
       - name: Build Next.js project
-        run: npm run build
+        env:
+          PLUTU_ACCESS_TOKEN: ${{ secrets.PLUTU_ACCESS_TOKEN }}
+          PLUTU_API_KEY: ${{ secrets.PLUTU_API_KEY }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          COMPANY_NAME: ${{ secrets.COMPANY_NAME }}
+          SITE_NAME: ${{ secrets.SITE_NAME }}
+        run: bun run build
 
   deploy:
     needs: build-and-test
@@ -42,8 +61,20 @@ jobs:
         with:
           node-version: 18
 
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
       - name: Install Vercel CLI
-        run: npm install -g vercel
+        run: bun install -g vercel
 
       - name: Deploy to Vercel
+        env:
+          PLUTU_ACCESS_TOKEN: ${{ secrets.PLUTU_ACCESS_TOKEN }}
+          PLUTU_API_KEY: ${{ secrets.PLUTU_API_KEY }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          COMPANY_NAME: ${{ secrets.COMPANY_NAME }}
+          SITE_NAME: ${{ secrets.SITE_NAME }}
         run: vercel --token=${{ secrets.VERCEL_TOKEN }} --prod
