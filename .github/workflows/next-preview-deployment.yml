@@ -31,9 +31,20 @@ jobs:
         env:
           PLUTU_ACCESS_TOKEN: ${{ secrets.PLUTU_ACCESS_TOKEN }}
           PLUTU_API_KEY: ${{ secrets.PLUTU_API_KEY }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          COMPANY_NAME: ${{ secrets.COMPANY_NAME }}
+          SITE_NAME: ${{ secrets.SITE_NAME }}
         run: bun test
 
       - name: Build Next.js project
+        env:
+          PLUTU_ACCESS_TOKEN: ${{ secrets.PLUTU_ACCESS_TOKEN }}
+          PLUTU_API_KEY: ${{ secrets.PLUTU_API_KEY }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          COMPANY_NAME: ${{ secrets.COMPANY_NAME }}
+          SITE_NAME: ${{ secrets.SITE_NAME }}
         run: bun run build
 
   deploy:
@@ -59,4 +70,11 @@ jobs:
         run: bun install -g vercel
 
       - name: Deploy to Vercel
+        env:
+          PLUTU_ACCESS_TOKEN: ${{ secrets.PLUTU_ACCESS_TOKEN }}
+          PLUTU_API_KEY: ${{ secrets.PLUTU_API_KEY }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          COMPANY_NAME: ${{ secrets.COMPANY_NAME }}
+          SITE_NAME: ${{ secrets.SITE_NAME }}
         run: vercel --token=${{ secrets.VERCEL_TOKEN }} --prod
