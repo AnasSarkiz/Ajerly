@@ -23,6 +23,7 @@ import {
   SitemarkIcon,
 } from "./components/CustomIcons"
 import ForgotPassword from "./components/ForgotPassword"
+import { useRouter } from "next/navigation"
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -53,6 +54,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }))
 
 export default function SignIn(props: { disableCustomTheme?: boolean }) {
+  const router = useRouter()
   const [emailError, setEmailError] = React.useState(false)
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("")
   const [passwordError, setPasswordError] = React.useState(false)
@@ -78,7 +80,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     const password = data.get("password") as string
 
     try {
-      const response = await fetch("/api/signin", {
+      const response = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,6 +89,9 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       })
       const res = await response.json()
       console.log("user: ", res.user, "token: ", res.token)
+      if (response.ok) {
+        router.push("/")
+      }
     } catch (error) {
       console.error("Error:", error)
     }

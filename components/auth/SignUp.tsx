@@ -21,7 +21,7 @@ import {
   GoogleIcon,
   SitemarkIcon,
 } from "./components/CustomIcons"
-import { signUp } from "lib/auth/auth"
+import { useRouter } from "next/navigation"
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -52,6 +52,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }))
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
+  const router = useRouter()
   const [emailError, setEmailError] = React.useState(false)
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("")
   const [passwordError, setPasswordError] = React.useState(false)
@@ -108,7 +109,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     const password = data.get("password") as string
 
     try {
-      const response = await fetch("api/signup", {
+      const response = await fetch("api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -118,6 +119,9 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       console.log(response)
       const res = await response.json()
       console.log("user: ", res.user, "token: ", res.token)
+      if (response.ok) {
+        router.push("/auth")
+      }
     } catch (error) {
       console.error("Error:", error)
     }
