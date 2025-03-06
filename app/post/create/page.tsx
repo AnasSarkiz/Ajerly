@@ -1,7 +1,16 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 
-export default function CreatePostPage() {
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "components/ui/DropDown"
+import { Button } from "@headlessui/react"
+
+export default function Page() {
   const [prices, setPrices] = useState([{ amount: "", period: "day" }])
   const [previewImage, setPreviewImage] = useState<string | null>(null)
   const [selectedImages, setSelectedImages] = useState<File[]>([])
@@ -168,20 +177,29 @@ export default function CreatePostPage() {
                   className="w-full border rounded-xl  p-2 sm:text-sm"
                   placeholder="Enter price"
                 />
-                <select
-                  value={price.period}
-                  onChange={(e) =>
-                    handlePriceChange(index, "period", e.target.value)
-                  }
-                  className="w-full border rounded-xl  p-2 sm:text-sm"
-                >
-                  {getAvailablePeriods(index).map((period) => (
-                    <option
-                      key={period}
-                      value={period}
-                    >{`Per ${period.charAt(0).toUpperCase() + period.slice(1)}`}</option>
-                  ))}
-                </select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    asChild
+                    className="w-full border rounded-xl p-2 sm:text-sm"
+                  >
+                    <Button>{`Per ${price.period.charAt(0).toUpperCase() + price.period.slice(1)}`}</Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuRadioGroup
+                      value={price.period}
+                      onValueChange={(e) =>
+                        handlePriceChange(index, "period", e)
+                      }
+                    >
+                      {getAvailablePeriods(index).map((period) => (
+                        <DropdownMenuRadioItem
+                          key={period}
+                          value={period}
+                        >{`Per ${period.charAt(0).toUpperCase() + period.slice(1)}`}</DropdownMenuRadioItem>
+                      ))}
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

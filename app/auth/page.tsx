@@ -5,19 +5,19 @@ import SignUp from "components/auth/SignUp"
 import { useSearchParams } from "next/navigation"
 import { Suspense } from "react"
 
-const SignInUp = () => {
+const Auth = () => {
   const params = useSearchParams()
   const method = params.get("method")
 
   return <>{method === "signup" ? <SignUp /> : <SignIn />}</>
 }
 
-const page = () => {
+const Page = () => {
   return (
     <Suspense>
-      <SignInUp />
+      <Auth />
     </Suspense>
   )
 }
 
-export default page
+export default Page
