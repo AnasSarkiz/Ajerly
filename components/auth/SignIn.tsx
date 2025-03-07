@@ -24,6 +24,7 @@ import {
 } from "./components/CustomIcons"
 import ForgotPassword from "./components/ForgotPassword"
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -78,20 +79,14 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     const data = new FormData(event.currentTarget)
     const email = data.get("email") as string
     const password = data.get("password") as string
-
+    console.log("email: ", email, "password: ", password)
     try {
-      const response = await fetch("/api/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      await signIn("credentials", {
+        redirect: true,
+        callbackUrl: "/",
+        email,
+        password,
       })
-      const res = await response.json()
-      console.log("user: ", res.user, "token: ", res.token)
-      if (response.ok) {
-        router.push("/")
-      }
     } catch (error) {
       console.error("Error:", error)
     }
