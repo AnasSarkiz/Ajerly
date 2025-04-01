@@ -1,7 +1,8 @@
-import uploadImages from "lib/cloudinary/upload-image"
+import uploadImages from "lib/cloudinary/upload-images"
 import { NextRequest, NextResponse } from "next/server"
 import { savePost } from "lib/database/posts"
 import { Prisma } from "@prisma/client"
+import destroyImages from "lib/cloudinary/destroy-image"
 
 export async function POST(req: NextRequest) {
   try {
@@ -75,7 +76,18 @@ export async function POST(req: NextRequest) {
     )
 
     const userId = "12345" // Replace with actual user ID
-    const imageUrls = await uploadImages(buffers)
+    let imageUrls
+    let imageIds
+    try {
+      const uploadResult = await uploadImages(buffers)
+      imageUrls = uploadResult.map((res) => res.url)
+      imageIds = uploadResult.map((res) => res.id)
+    } catch (e) {
+      return NextResponse.json(
+        { error: "Failed to upload images: " + e },
+        { status: 500 },
+      )
+    }
 
     const postData: Prisma.PostCreateInput = {
       userId,
@@ -94,6 +106,7 @@ export async function POST(req: NextRequest) {
       await savePost(postData, imageUrls)
     } catch (e) {
       console.error(e)
+      await destroyImages(imageIds)
       return NextResponse.json(
         { error: "Failed to save post: " + e },
         { status: 500 },

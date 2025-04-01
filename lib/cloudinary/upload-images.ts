@@ -9,7 +9,7 @@ cloudinary.config({
 
 export default async function uploadImages(
   images: Buffer[],
-): Promise<string[]> {
+): Promise<{ id: string; url: string }[]> {
   const uploadPromises = images.map((imageBuffer, index) => {
     const uniqueId = `image_${Date.now()}_${index}`
     return new Promise<{
@@ -40,5 +40,7 @@ export default async function uploadImages(
     )
   }
 
-  return responses.map((res) => res.result!.secure_url)
+  return responses.map((res) => {
+    return { url: res.result!.secure_url, id: res.result!.public_id }
+  })
 }
