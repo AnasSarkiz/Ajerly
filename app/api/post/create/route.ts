@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       !textFields.prices
     ) {
       return NextResponse.json(
-        { error: "Title, content, location, and phone are required" },
+        { error: "Title, content, location, prices and phone are required" },
         { status: 400 },
       )
     }
