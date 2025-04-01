@@ -8,7 +8,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-    url      = "file:./dev.db"
+  url      = "file:./dev.db"
 }
 
 model User {
@@ -17,4 +17,29 @@ model User {
   email    String  @unique
   password String
   phone    String?
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  userId    String  
+  title     String
+  content   String
+  phone     String
+  location  String
+  prices    Json    
+  perHour   Float
+  perDay    Float
+  perWeek   Float
+  perMonth  Float
+  perYear   Float
+  images    Image[]  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Image {
+  id     String @id @default(cuid())
+  url    String
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
