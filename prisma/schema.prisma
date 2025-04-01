@@ -26,7 +26,6 @@ model Post {
   content   String
   phone     String
   location  String
-  prices    Json    
   perHour   Float
   perDay    Float
   perWeek   Float
