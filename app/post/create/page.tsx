@@ -65,12 +65,47 @@ export default function Page() {
     }
   }
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+
+    selectedImages.forEach((image) => {
+      formData.append("image", image)
+    })
+
+    if (selectedImages.length === 0) {
+      alert("Please select at least one image.")
+      return
+    }
+
+    try {
+      const response = await fetch("/api/post/create", {
+        method: "POST",
+        body: formData,
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        alert("Post created and images uploaded successfully!")
+        console.log("Uploaded images:", data.imageUrls)
+        setSelectedImages([])
+      } else {
+        const errorData = await response.json()
+        alert(`Error: ${errorData.error}`)
+      }
+    } catch (error) {
+      alert("An error occurred while uploading the images.")
+    }
+  }
+
   return (
     <div className="max-w-screen w-screen px-4 py-10  sm:px-6 lg:px-8">
       <h1 className="text-3xl font-extrabold text-center mb-6 text-primary">
         Create a New Post
       </h1>
-      <form className="space-y-6">
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        <input type="hidden" name="prices" value={JSON.stringify(prices)} />
         <div>
           <p className="block text-sm mt-10 mb-2  dark:text-white sm:text-lg font-semibold">
             Select Images (max 3) for your post
@@ -138,6 +173,7 @@ export default function Page() {
             </p>
             <input
               type="text"
+              name="title"
               className="w-full border rounded-xl  p-2 sm:text-sm"
               placeholder="Enter post title"
             />
@@ -147,6 +183,7 @@ export default function Page() {
               Content
             </p>
             <textarea
+              name="content"
               className="w-full border rounded-xl  p-2 sm:text-sm"
               rows={4}
               placeholder="Enter post content"
@@ -158,6 +195,7 @@ export default function Page() {
             </p>
             <input
               type="tel"
+              name="phone"
               className="w-full border rounded-xl  p-2 sm:text-sm"
               placeholder="Enter phone number"
             />
@@ -230,6 +268,7 @@ export default function Page() {
             </p>
             <input
               type="text"
+              name="location"
               className="w-full border rounded-xl  p-2 sm:text-sm"
               placeholder="Enter location"
             />
