@@ -100,23 +100,23 @@ export default function Page() {
   }
 
   return (
-    <div className="max-w-screen w-screen px-4 py-10  sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-extrabold text-center mb-6 text-primary">
+    <div className="flex flex-col items-center justify-center min-h-screen px-6 py-12 sm:px-8 lg:px-10 bg-gray-50 dark:bg-neutral-900">
+      <h1 className="text-4xl font-bold text-center mb-8 text-primary">
         Create a New Post
       </h1>
-      <form className="space-y-6" onSubmit={handleSubmit}>
+      <form className="w-full max-w-2xl space-y-8" onSubmit={handleSubmit}>
         <input type="hidden" name="prices" value={JSON.stringify(prices)} />
         <div>
-          <p className="block text-sm mt-10 mb-2  dark:text-white sm:text-lg font-semibold">
+          <p className="block text-base mb-4 dark:text-white sm:text-lg font-medium text-center">
             Select Images (max 3) for your post
           </p>
-          <div className="mt-8  items-center flex gap-2 pb-4">
+          <div className="flex justify-center gap-4 pb-6">
             {selectedImages.map((image, index) => (
               <div key={index} className="relative">
                 <img
                   src={URL.createObjectURL(image)}
                   alt={`Preview ${index + 1}`}
-                  className="md:h-64 md:w-64 w-36 h-36 object-contain rounded-lg border border-gray-300 cursor-pointer"
+                  className="md:h-48 md:w-48 w-32 h-32 object-cover rounded-lg border border-gray-300 cursor-pointer"
                   onClick={() => setPreviewImage(URL.createObjectURL(image))}
                 />
                 <svg
@@ -125,7 +125,7 @@ export default function Page() {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="absolute top-0 cursor-pointer right-0 bg-red-600 text-white w-6 h-6 "
+                  className="absolute top-1 right-1 bg-red-600 text-white w-5 h-5 rounded-full cursor-pointer"
                   onClick={() => {
                     setSelectedImages(
                       selectedImages.filter((_, i) => i !== index),
@@ -141,7 +141,7 @@ export default function Page() {
               </div>
             ))}
             {selectedImages.length < 3 && (
-              <label className="md:h-64 md:w-64 w-36 h-36 flex items-center justify-center border border-gray-300 rounded-lg cursor-pointer">
+              <label className="md:h-48 md:w-48 w-32 h-32 flex items-center justify-center border border-gray-300 rounded-lg cursor-pointer">
                 <input
                   type="file"
                   multiple
@@ -166,59 +166,62 @@ export default function Page() {
             )}
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center w-full md:pr-20">
+        <div className="flex flex-col items-center w-full">
           <div className="w-full">
-            <p className="block text-sm mt-10 mb-2  dark:text-white sm:text-lg font-semibold">
+            <p className="block text-base mb-4 dark:text-white sm:text-lg font-medium text-center">
               Title
             </p>
             <input
               type="text"
               name="title"
-              className="w-full border rounded-xl  p-2 sm:text-sm"
+              className="w-full border rounded-lg p-3 sm:text-base"
               placeholder="Enter post title"
             />
           </div>
           <div className="w-full">
-            <p className="block text-sm mt-10 mb-2  dark:text-white sm:text-lg font-semibold">
+            <p className="block text-base mb-4 dark:text-white sm:text-lg font-medium text-center">
               Content
             </p>
             <textarea
               name="content"
-              className="w-full border rounded-xl  p-2 sm:text-sm"
-              rows={4}
+              className="w-full border rounded-lg p-3 sm:text-base"
+              rows={5}
               placeholder="Enter post content"
             />
           </div>
           <div className="w-full">
-            <p className="block text-sm mt-10 mb-2  dark:text-white sm:text-lg font-semibold">
+            <p className="block text-base mb-4 dark:text-white sm:text-lg font-medium text-center">
               Phone Number
             </p>
             <input
               type="tel"
               name="phone"
-              className="w-full border rounded-xl  p-2 sm:text-sm"
+              className="w-full border rounded-lg p-3 sm:text-base"
               placeholder="Enter phone number"
             />
           </div>
           <div className="w-full">
-            <p className="block text-sm mt-10 mb-2  dark:text-white sm:text-lg font-semibold">
+            <p className="block text-base mb-4 dark:text-white sm:text-lg font-medium text-center">
               Prices
             </p>
             {prices.map((price, index) => (
-              <div key={index} className="flex gap-2 mb-2 items-center">
+              <div
+                key={index}
+                className="flex gap-4 mb-4 items-center justify-center"
+              >
                 <input
                   type="number"
                   value={price.amount}
                   onChange={(e) =>
                     handlePriceChange(index, "amount", e.target.value)
                   }
-                  className="w-full border rounded-xl  p-2 sm:text-sm"
+                  className="w-1/2 border rounded-lg p-3 sm:text-base"
                   placeholder="Enter price"
                 />
                 <DropdownMenu>
                   <DropdownMenuTrigger
                     asChild
-                    className="w-full border rounded-xl p-2 sm:text-sm"
+                    className="w-1/2 border rounded-lg p-3 sm:text-base"
                   >
                     <Button>{`Per ${price.period.charAt(0).toUpperCase() + price.period.slice(1)}`}</Button>
                   </DropdownMenuTrigger>
@@ -244,7 +247,7 @@ export default function Page() {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-14 cursor-pointer text-red-500 hover:text-red-700 hover:scale-110 transform transition-transform"
+                  className="w-5 h-5 cursor-pointer text-red-500 hover:text-red-700 hover:scale-110 transform transition-transform"
                   onClick={() => removePriceField(index)}
                 >
                   <path
@@ -257,25 +260,25 @@ export default function Page() {
             ))}
             <p
               onClick={addPriceField}
-              className={`m-1 ${prices.length >= 4 ? "hidden" : ""} w-[140px] cursor-pointer underline  dark:text-white text-sm font-semibold`}
+              className={`m-1 ${prices.length >= 4 ? "hidden" : ""} w-[140px] cursor-pointer underline dark:text-white text-sm font-medium text-center`}
             >
               {`${prices.length === 0 ? "Add Price" : "Add Another Price"}`}
             </p>
           </div>
           <div className="w-full">
-            <p className="block text-sm mt-10 mb-2  dark:text-white sm:text-lg font-semibold">
+            <p className="block text-base mb-4 dark:text-white sm:text-lg font-medium text-center">
               Location
             </p>
             <input
               type="text"
               name="location"
-              className="w-full border rounded-xl  p-2 sm:text-sm"
+              className="w-full border rounded-lg p-3 sm:text-base"
               placeholder="Enter location"
             />
           </div>
           <button
             type="submit"
-            className="w-40 md:w-52 mt-12 inline-flex justify-center py-2 px-4 text-white border border-green-700 bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm text-center me-2 mb-2 dark:border-green-500 dark:text-white dark:bg-green-600 dark:focus:ring-green-800"
+            className="w-40 md:w-52 mt-10 inline-flex justify-center py-3 px-5 text-white border border-green-700 bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base text-center dark:border-green-500 dark:text-white dark:bg-green-600 dark:focus:ring-green-800"
           >
             Submit
           </button>
